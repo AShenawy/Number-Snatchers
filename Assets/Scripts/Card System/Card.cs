@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
-public class Card
+public class Card : MonoBehaviour
 {
     public CardType cardType;
-    public Sprite cardArt;
+    [Range(-9, 9)]public int value;
 
 
 }
