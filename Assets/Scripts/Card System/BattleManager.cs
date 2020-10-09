@@ -7,11 +7,13 @@ public class BattleManager : MonoBehaviour
 {
     public Text targetNumberDisplay;
     public Text currentNumberDisplay;
+    public Dealer dealer;
+    public BattleMode battleMode;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        dealer.FillDeck(battleMode);
     }
 
     // Update is called once per frame
@@ -20,3 +22,5 @@ public class BattleManager : MonoBehaviour
         
     }
 }
+
+public enum BattleMode { Beginner, Intermediate, Expert }
