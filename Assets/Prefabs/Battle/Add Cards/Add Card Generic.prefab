@@ -141,3 +141,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 0
   value: 0
+  peekUpDistance: 50
