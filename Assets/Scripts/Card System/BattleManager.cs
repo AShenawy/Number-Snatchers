@@ -18,7 +18,6 @@ public class BattleManager : MonoBehaviour
     [Header("Controllers")]
     public Dealer dealer;
     public GuessHandler guessHandler;
-    // Fuuuuuuck
 
     [Header("Player Parameters")]
     public PlayerHand playerHand;
