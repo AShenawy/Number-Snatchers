@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
     public BattlePhases battlePhase;
 
     [Header("Info Displays")]
+    public Text roundNumberDisplay;
     public Text targetNumberDisplay;
     public Text currentNumberDisplay;
     public Image nPCCardDisplay;
@@ -88,6 +89,7 @@ public class BattleManager : MonoBehaviour
         // generate new target value for the round
         GenerateTargetNumber();
         round++;
+        roundNumberDisplay.text = round.ToString();
     }
 
     void GenerateTargetNumber()
@@ -109,5 +111,6 @@ public class BattleManager : MonoBehaviour
 }
 
 public enum BattleModes { Beginner, Intermediate, Expert }
+
 public enum BattlePhases { Deal, CardPick, Challenge, Attack, TurnSwitch }
 public enum CurrentPlayer { Human, NPC }
