@@ -13,7 +13,7 @@ public abstract class Hand : MonoBehaviour
         card.GetComponent<RectTransform>().SetParent(gameObject.transform, false);
     }
 
-    public void PlayCard(GameObject card)
+    public virtual void PlayCard(GameObject card)
     {
         table.PlaceOnTable(card);
     }
