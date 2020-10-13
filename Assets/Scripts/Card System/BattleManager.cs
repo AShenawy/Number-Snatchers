@@ -85,6 +85,7 @@ public class BattleManager : MonoBehaviour
 
     void NewRound()
     {
+        // generate new target value for the round
         GenerateTargetNumber();
         round++;
     }
