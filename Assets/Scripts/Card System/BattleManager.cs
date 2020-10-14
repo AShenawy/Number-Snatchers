@@ -32,9 +32,9 @@ public class BattleManager : MonoBehaviour
     public NPCHand nPCHand;
     public EnemyBattleData nPCData;
 
-    private int targetNumber;
-    private int currentNumber;
-    private int round = 0;
+    [HideInInspector] public int targetNumber;
+    [HideInInspector] public int currentNumber;
+    [HideInInspector] public int currentRound = 0;
     private Phase currentPhase;
 
     private void OnEnable()
@@ -56,7 +56,7 @@ public class BattleManager : MonoBehaviour
         dealer.FillDeck(battleMode);
 
         // start a new round
-        NewRound();
+        //NewRound();
         StartCoroutine(DealCards());
 
         // hide the guess input screen at start
@@ -95,13 +95,13 @@ public class BattleManager : MonoBehaviour
     {
         guessHandler.gameObject.SetActive(true);
     }
-
+    /*
     void NewRound()
     {
         // generate new target value for the round
         GenerateTargetNumber();
-        round++;
-        roundNumberDisplay.text = round.ToString();
+        currentRound++;
+        roundNumberDisplay.text = currentRound.ToString();
     }
 
     void GenerateTargetNumber()
@@ -109,7 +109,7 @@ public class BattleManager : MonoBehaviour
         targetNumber = Random.Range(5, 25);
         targetNumberDisplay.text = targetNumber.ToString();
     }
-
+    */
     void CompareInputAgainstExact(int playerInput)
     {
         //TODO compare player guess input against what the value should exactly be.

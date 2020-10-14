@@ -1,4 +1,6 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 // this phase is the first to occur every battle. It should only be called once in the beginning to set up the battle stats
 public class Start : Phase
@@ -8,6 +10,9 @@ public class Start : Phase
     Text roundNumberDisplay;
     Text targetNumberDisplay;
     Text currentNumberDisplay;
+
+    float counter;
+    float exitTimer = 2f;   // how long to wait before exiting this phase
 
     public Start(BattleManager _battleManager, Stats _playerStats, EnemyBattleData _npcData,Image _playerHpDisplay, Image _npcHpDisplay) 
         : base(_battleManager, _playerStats, _npcData, _playerHpDisplay, _npcHpDisplay)
@@ -39,20 +44,27 @@ public class Start : Phase
         roundNumberDisplay.text = "";
         targetNumberDisplay.text = "";
         currentNumberDisplay.text = "";
+        counter = Time.timeSinceLevelLoad;
 
         base.Enter();
     }
 
     public override void Update()
     {
-        // nothing happens during this phase besides initialisation. Move on to next phase
-        //nextPhase = new 
-        stage = Stages.Exit;
+        // nothing happens during this phase besides initialisation. Move on to next phase after time passes
+        if (Time.timeSinceLevelLoad - counter >= exitTimer)
+            DelayedExit();
     }
 
     public override void Exit()
     {
-
         base.Exit();
+    }
+
+    void DelayedExit()
+    {
+        Debug.Log("Exiting Start phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
+        nextPhase = new NewRound(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+        stage = Stages.Exit;
     }
 }
