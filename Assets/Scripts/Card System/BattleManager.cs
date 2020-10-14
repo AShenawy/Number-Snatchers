@@ -15,6 +15,10 @@ public class BattleManager : MonoBehaviour
     public Text targetNumberDisplay;
     public Text currentNumberDisplay;
     public Image nPCCardDisplay;
+    public Text nPCNameDisplay;
+    public Image nPCHPDisplay;
+    public Image playerHPDisplay;
+    public Text currentPhaseText;
 
     [Header("Controllers")]
     public Dealer dealer;
@@ -22,12 +26,16 @@ public class BattleManager : MonoBehaviour
 
     [Header("Player Parameters")]
     public PlayerHand playerHand;
-    [Space]
+    public Stats playerStats;
+
+    [Header("NPC Parameters")]
     public NPCHand nPCHand;
+    public EnemyBattleData nPCData;
 
     private int targetNumber;
     private int currentNumber;
     private int round = 0;
+    private Phase currentPhase;
 
     private void OnEnable()
     {
@@ -53,6 +61,7 @@ public class BattleManager : MonoBehaviour
 
         // hide the guess input screen at start
         guessHandler.gameObject.SetActive(false);
+        currentPhase = new Start(this, playerStats, nPCData, playerHPDisplay, nPCHPDisplay);
     }
 
     // Update is called once per frame
@@ -66,6 +75,9 @@ public class BattleManager : MonoBehaviour
             dealer.DealCards(nPCHand);
 
         // ***********************************************
+
+        currentPhase = currentPhase.Process();
+        currentPhaseText.text = currentPhase.ToString();
     }
 
     IEnumerator DealCards()
