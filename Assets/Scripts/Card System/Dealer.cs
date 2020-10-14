@@ -15,16 +15,16 @@ public class Dealer : MonoBehaviour
     public List<GameObject> graveyard = new List<GameObject>();
 
     [Header("Additional Parameters")]
-    [SerializeField, Range(0, 7)] int cardsDealt = 5;
+    [SerializeField, Range(0, 7)] int cardsPerDeal = 5;
     [SerializeField] Image threeCardsIndicator;
     [SerializeField] Image twoCardsIndicator;
     [SerializeField] Image oneCardIndicator;
 
-    public void FillDeck(BattleModes battMod)
+    public void FillDeck(EnemyDifficulty difficulty)
     {
-        switch (battMod)
+        switch (difficulty)
         {
-            case BattleModes.Beginner:
+            case EnemyDifficulty.Beginner:
                 // set up the cards to be played
                 // for beginner battle there will be 5 copies of each 1-9 card
                 GameObject[] addCardsBgn = new GameObject[45];
@@ -35,7 +35,7 @@ public class Dealer : MonoBehaviour
                 deckCards.InsertRange(0, addCardsBgn);
                 break;
 
-            case BattleModes.Intermediate:
+            case EnemyDifficulty.Intermediate:
                 // set up the cards to be played
                 // for intermediate battle there will be 16 copies of each 1-9 card
                 GameObject[] addCardsInt = new GameObject[144];
@@ -52,15 +52,18 @@ public class Dealer : MonoBehaviour
                 deckCards.InsertRange(addCardsInt.Length, wildCardInt);
                 break;
 
-            case BattleModes.Expert:
+            case EnemyDifficulty.Expert:
                 // currently expert is same as intermediate mode
-                goto case BattleModes.Intermediate;
+                goto case EnemyDifficulty.Intermediate;
         }
     }
 
     public void DealCards(Hand hand)
     {
-        for (int i = 0; i < cardsDealt; i++)
+        int cardsToDeal = cardsPerDeal - hand.cardsInHand.Count;
+        print(hand.name + " started play with " + hand.cardsInHand.Count + " cards. Will be dealt " + cardsToDeal + " cards.");
+
+        for (int i = 0; i < cardsToDeal; i++)
         {
             // pick a random card from the deck
             int random = Random.Range(0, deckCards.Count);

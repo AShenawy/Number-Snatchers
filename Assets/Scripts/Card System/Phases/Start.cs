@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 // this phase is the first to occur every battle. It should only be called once in the beginning to set up the battle stats
 public class Start : Phase
 {
+    Dealer cardDealer;
+    PlayerHand plrHand;
+    NPCHand npcHand;
     Image npcCard;
     Text npcNameDisplay;
     Text roundNumberDisplay;
@@ -18,6 +20,10 @@ public class Start : Phase
         : base(_battleManager, _playerStats, _npcData, _playerHpDisplay, _npcHpDisplay)
     {
         name = Phases.BattleStart;
+        
+        cardDealer = battleManager.dealer;
+        plrHand = battleManager.playerHand;
+        npcHand = battleManager.nPCHand;
         npcCard = battleManager.nPCCardDisplay;
         npcNameDisplay = battleManager.nPCNameDisplay;
 
@@ -40,11 +46,19 @@ public class Start : Phase
         currentHpNPC = startingHpNPC;
         npcHpDisplay.fillAmount = currentHpNPC / startingHpNPC;
 
+        // set up deck
+        cardDealer.FillDeck(npcData.difficulty);
+
+        // deal both sides on game start
+        DealBothPlayers();
+
         // initialise counters
         roundNumberDisplay.text = "";
         targetNumberDisplay.text = "";
         currentNumberDisplay.text = "";
         counter = Time.timeSinceLevelLoad;
+
+        battleManager.guessHandler.gameObject.SetActive(false);
 
         base.Enter();
     }
@@ -56,9 +70,10 @@ public class Start : Phase
             DelayedExit();
     }
 
-    public override void Exit()
+    void DealBothPlayers()
     {
-        base.Exit();
+        battleManager.StartCoroutine(battleManager.DealCards(plrHand));
+        battleManager.StartCoroutine(battleManager.DealCards(npcHand));
     }
 
     void DelayedExit()

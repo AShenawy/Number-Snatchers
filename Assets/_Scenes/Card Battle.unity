@@ -1115,8 +1115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15929c121dd0e6b4ead54a90dfa05b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleMode: 0
+  difficulty: 0
   battlePhase: 0
+  playerTurn: 0
   roundNumberDisplay: {fileID: 541896829}
   targetNumberDisplay: {fileID: 2062165065}
   currentNumberDisplay: {fileID: 1518391645}
@@ -1132,6 +1133,9 @@ MonoBehaviour:
     hP: 100
   nPCHand: {fileID: 2017785967}
   nPCData: {fileID: 11400000, guid: 84bf793f27d96b447aea4786c9bfcbaa, type: 2}
+  targetNumber: 0
+  currentNumber: 0
+  currentRound: 0
 --- !u!1 &318339599
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,7 +4215,7 @@ MonoBehaviour:
   - {fileID: 6481121753402882887, guid: a03d69206cbb59d4d8bd13914976e10d, type: 3}
   deckCards: []
   graveyard: []
-  cardsDealt: 5
+  cardsPerDeal: 5
   threeCardsIndicator: {fileID: 839780343}
   twoCardsIndicator: {fileID: 723370042}
   oneCardIndicator: {fileID: 417188364}

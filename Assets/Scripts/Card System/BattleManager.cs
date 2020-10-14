@@ -7,8 +7,9 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class BattleManager : MonoBehaviour
 {
-    public BattleModes battleMode;
-    public BattlePhases battlePhase;
+    public EnemyDifficulty difficulty;
+    public Phases battlePhase;
+    public CurrentPlayer playerTurn;
 
     [Header("Info Displays")]
     public Text roundNumberDisplay;
@@ -52,43 +53,35 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        battlePhase = BattlePhases.Deal;
-        dealer.FillDeck(battleMode);
+        //dealer.FillDeck(battleMode);
 
         // start a new round
         //NewRound();
-        StartCoroutine(DealCards());
+        //StartCoroutine(DealCards());
 
         // hide the guess input screen at start
-        guessHandler.gameObject.SetActive(false);
+        //guessHandler.gameObject.SetActive(false);
         currentPhase = new Start(this, playerStats, nPCData, playerHPDisplay, nPCHPDisplay);
+        difficulty = nPCData.difficulty;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // ************** Testing controls to be deleted 
-        if (Input.GetKeyDown(KeyCode.P))
-            dealer.DealCards(playerHand);
-
-        if (Input.GetKeyDown(KeyCode.N))
-            dealer.DealCards(nPCHand);
-
-        // ***********************************************
-
         currentPhase = currentPhase.Process();
-        currentPhaseText.text = currentPhase.ToString();
+        battlePhase = currentPhase.name;
+        currentPhaseText.text = currentPhase.name.ToString();
     }
 
-    IEnumerator DealCards()
+    public IEnumerator DealCards(Hand hand)
     {
         // currently the cards are dealt after 1 seconds of battle start. this time is arbitrary and should be checked
         yield return new WaitForSeconds(1f);
-        dealer.DealCards(playerHand);
+        dealer.DealCards(hand);
 
-        yield return new WaitForSeconds(1f);
-        dealer.DealCards(nPCHand);
-        battlePhase = BattlePhases.CardPick;
+        //yield return new WaitForSeconds(1f);
+        //dealer.DealCards(nPCHand);
+        ////battlePhase = BattlePhases.CardPick;
     }
 
     void DisplayGuessInput(GameObject card)
@@ -122,7 +115,7 @@ public class BattleManager : MonoBehaviour
     }
 }
 
-public enum BattleModes { Beginner, Intermediate, Expert }
+//public enum BattleModes { Beginner, Intermediate, Expert }
 
-public enum BattlePhases { Deal, CardPick, Challenge, Attack, TurnSwitch }
+//public enum BattlePhases { Deal, CardPick, Challenge, Attack, TurnSwitch }
 public enum CurrentPlayer { Human, NPC }
