@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class Deal : Phase
 {
-    Dealer cardDealer;
     PlayerHand plrHand;
     NPCHand npcHand;
     CurrentPlayer player;
 
+    bool dealEnded;
     //float counter;
     //float exitTimer = 1f;
 
@@ -16,10 +16,11 @@ public class Deal : Phase
     {
         name = Phases.CardDeal;
 
-        cardDealer = battleManager.dealer;
         plrHand = battleManager.playerHand;
         npcHand = battleManager.nPCHand;
         player = battleManager.playerTurn;
+
+        battleManager.onDealEnded += OnCardDealEnded;
     }
 
     public override void Enter()
@@ -35,32 +36,31 @@ public class Deal : Phase
                 battleManager.StartCoroutine(battleManager.DealCards(npcHand));
                 break;
         }
-        
+
         base.Enter();
     }
 
     public override void Update()
     {
-        // check when to move to next phase when side received their cards
-        switch (player)
+        // move to next phase when players have been dealt cards
+        if (dealEnded)
         {
-            case CurrentPlayer.Human:
-                if (plrHand.cardsInHand.Count > 4)
-                {
-                    nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
-                    Debug.Log("Exiting Deal phase.");
-                    stage = Stages.Exit;
-                }
-                break;
-
-            case CurrentPlayer.NPC:
-                if (npcHand.cardsInHand.Count > 4)
-                {
-                    nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
-                    Debug.Log("Exiting Deal phase.");
-                    stage = Stages.Exit;
-                }
-                break;
+            nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+            stage = Stages.Exit;
         }
+    }
+
+    public override void Exit()
+    {
+        // reset the deal ended bool and unsub to event
+        dealEnded = false;
+        battleManager.onDealEnded -= OnCardDealEnded;
+        Debug.Log("Exiting Deal phase after all cards are dealt to " + player +".");
+        base.Exit();
+    }
+
+    void OnCardDealEnded()
+    {
+        dealEnded = true;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class BattleManager : MonoBehaviour
 {
+    public event Action onDealEnded;
+
     public EnemyDifficulty difficulty;
     public Phases battlePhase;
     public CurrentPlayer playerTurn;
@@ -78,6 +81,7 @@ public class BattleManager : MonoBehaviour
         // currently the cards are dealt after 1 seconds of battle start. this time is arbitrary and should be checked
         yield return new WaitForSeconds(1f);
         dealer.DealCards(hand);
+        onDealEnded?.Invoke();
 
         //yield return new WaitForSeconds(1f);
         //dealer.DealCards(nPCHand);
