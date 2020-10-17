@@ -38,6 +38,8 @@ public class Start : Phase
         startingHpPlayer = playerStats.hP;
         currentHpPlayer = startingHpPlayer;
         playerHpDisplay.fillAmount = currentHpPlayer / startingHpPlayer;
+        // prevent player from playing cards until CardPick phase
+        plrHand.BlockCardInteractions(true);
 
         // set up opponent stats & display
         npcCard.sprite = npcData.enemyCard;
@@ -52,7 +54,8 @@ public class Start : Phase
         // deal both sides on game start
         DealBothPlayers();
 
-        // initialise counters
+        // initialise counters & parameters
+        //battleManager.playerTurn = CurrentPlayer.Human;       //********** Uncomment when done with testing *************
         roundNumberDisplay.text = "";
         targetNumberDisplay.text = "";
         currentNumberDisplay.text = "";

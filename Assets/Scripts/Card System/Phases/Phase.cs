@@ -50,6 +50,13 @@ public class Phase
     }
 }
 
+/*
+ * 3 loops occur in the below phases:
+ * Inner Loop occurs every time the turn switches between player and NPC. It starts at CardDeal and ends at EndTurn.
+ * Middle Loop occurs when a target is reached or went over. It starts at NewRound and ends at EndTurn.
+ * Outer Loop occurs when a new battle begins. It starts at BattleStart and ends at EndTurn.
+ * inner loop always repeats while game is running, middle loop occurs when a new target is needed. outer loop only occurs once a battle.
+ */
 public enum Phases { BattleStart, NewRound, CardDeal, CardPick, Challenge, GuessCheck, EndTurn, BattleEnd }
 
 public enum Stages { Enter, Update, Exit }

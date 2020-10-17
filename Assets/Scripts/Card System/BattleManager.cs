@@ -10,8 +10,10 @@ public class BattleManager : MonoBehaviour
 {
     public event Action onDealEnded;
 
+    //****** difficulty and battlePhase should be removed after testing, as they are set internatlly
     public EnemyDifficulty difficulty;
     public Phases battlePhase;
+    //****** playerTurn to be set to hide in inspector after testing, as it is set internally
     public CurrentPlayer playerTurn;
 
     [Header("Info Displays")]

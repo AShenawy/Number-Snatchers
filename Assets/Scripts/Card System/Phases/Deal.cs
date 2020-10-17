@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+// This phase will occur every time the game switches turns between player and NPC. It is the 1st phase in the inner loop
 public class Deal : Phase
 {
     PlayerHand plrHand;

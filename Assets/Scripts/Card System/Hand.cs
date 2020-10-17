@@ -15,6 +15,7 @@ public abstract class Hand : MonoBehaviour
 
     public virtual void PlayCard(GameObject card)
     {
+        cardsInHand.Remove(card);
         table.PlaceOnTable(card);
     }
 }
