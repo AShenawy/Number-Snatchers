@@ -109,7 +109,7 @@ public class BattleManager : MonoBehaviour
         targetNumberDisplay.text = targetNumber.ToString();
     }
     */
-    void CompareInputAgainstExact(int playerInput)
+    void CompareInputAgainstExact()
     {
         //TODO compare player guess input against what the value should exactly be.
     }
