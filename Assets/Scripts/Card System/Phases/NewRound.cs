@@ -7,8 +7,8 @@ public class NewRound : Phase
     float counter;
     float exitTimer = 1f;   // how long to wait before exiting this phase
 
-    public NewRound(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, Image _plrHpDisplay, Image _npcHpDisplay)
-            : base (_bm, _plStats, _npcData, _plrHpDisplay, _npcHpDisplay)
+    public NewRound(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
+            : base (_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.NewRound;
     }
@@ -48,7 +48,7 @@ public class NewRound : Phase
     void DelayedExit()
     {
         Debug.Log("Exiting New Round phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
-        nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+        nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
         stage = Stages.Exit;
     }
 }

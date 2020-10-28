@@ -6,8 +6,8 @@ using System.Collections;
 // this is the last phase in each loop and determines whether a new loop begins or the battle ends
 public class TurnEnd : Phase
 {
-    public TurnEnd(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, Image _plrHpDisplay, Image _npcHpDisplay)
-        : base(_bm, _plStats, _npcData, _plrHpDisplay, _npcHpDisplay)
+    public TurnEnd(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
+        : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.EndTurn;
     }
@@ -24,7 +24,7 @@ public class TurnEnd : Phase
         if (currentHpNPC <= 0 || currentHpPlayer <= 0)
         {
             Debug.Log("A side has reached 0 HP. Game is over");
-            nextPhase = new EndBattle(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+            nextPhase = new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
         }
         // if the target is reached or crossed then start a new round
@@ -32,7 +32,7 @@ public class TurnEnd : Phase
         {
             Debug.Log("Target number is reached. Starting a new round.");
             battleManager.SwitchTurn();
-            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
         }
         // if neither of the above then continue the same round and switch turns
@@ -40,7 +40,7 @@ public class TurnEnd : Phase
         {
             Debug.Log(battleManager.playerTurn + " player's turn has ended. Switching sides.");
             battleManager.SwitchTurn();
-            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);;
             stage = Stages.Exit;
         }    
     }

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Phase
+public abstract class Phase
 {
     public Phases name;
     protected Stages stage;

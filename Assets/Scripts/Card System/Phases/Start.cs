@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class Start : Phase
 {
     Dealer cardDealer;
-    PlayerHand plrHand;
-    NPCHand npcHand;
     Image npcCard;
     Text npcNameDisplay;
     Text roundNumberDisplay;
@@ -16,13 +14,13 @@ public class Start : Phase
     float counter;
     float exitTimer = 2f;   // how long to wait before exiting this phase
 
-    public Start(BattleManager _battleManager, Stats _playerStats, EnemyBattleData _npcData,Image _playerHpDisplay, Image _npcHpDisplay) 
-        : base(_battleManager, _playerStats, _npcData, _playerHpDisplay, _npcHpDisplay)
+    public Start(BattleManager _battleManager, Stats _playerStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd) 
+        : base(_battleManager, _playerStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.BattleStart;
         
         cardDealer = battleManager.dealer;
-        plrHand = battleManager.playerHand;
+        playerHand = battleManager.playerHand;
         npcHand = battleManager.nPCHand;
         npcCard = battleManager.nPCCardDisplay;
         npcNameDisplay = battleManager.nPCNameDisplay;
@@ -39,16 +37,16 @@ public class Start : Phase
         // set up player stats & display
         currentHpPlayer = startingHpPlayer;
         battleManager.playerCurrentHP = currentHpPlayer;
-        playerHpDisplay.fillAmount = currentHpPlayer / startingHpPlayer;
+        battleManager.playerHPDisplay.fillAmount = currentHpPlayer / startingHpPlayer;
         // prevent player from playing cards until CardPick phase
-        plrHand.BlockCardInteractions(true);
+        playerHand.BlockCardInteractions(true);
 
         // set up opponent stats & display
         npcCard.sprite = npcData.enemyCard;
         npcNameDisplay.text = npcData.enemyName;
         currentHpNPC = startingHpNPC;
         battleManager.npcCurrentHP = currentHpNPC;
-        npcHpDisplay.fillAmount = currentHpNPC / startingHpNPC;
+        battleManager.nPCHPDisplay.fillAmount = currentHpNPC / startingHpNPC;
 
         // set up deck
         cardDealer.FillDeck(npcData.difficulty);
@@ -77,14 +75,14 @@ public class Start : Phase
 
     void DealBothPlayers()
     {
-        battleManager.StartCoroutine(battleManager.DealCards(plrHand));
+        battleManager.StartCoroutine(battleManager.DealCards(playerHand));
         battleManager.StartCoroutine(battleManager.DealCards(npcHand));
     }
 
     void DelayedExit()
     {
         Debug.Log("Exiting Start phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
-        nextPhase = new NewRound(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+        nextPhase = new NewRound(battleManager, playerStats, npcData, base.playerHand, npcHand);
         stage = Stages.Exit;
     }
 }

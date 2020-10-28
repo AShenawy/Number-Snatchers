@@ -4,11 +4,8 @@ using UnityEngine.UI;
 // this phase is where the opponent of the current player gets to challenge their guess, if they choose to do so
 public class Challenge : Phase
 {
-    PlayerHand playerHand;
-    NPCHand npcHand;
-
-    public Challenge(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, Image _plrHpDisplay, Image _npcHpDisplay)
-        : base(_bm, _plStats, _npcData, _plrHpDisplay, _npcHpDisplay)
+    public Challenge(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
+        : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.Challenge;
     }
@@ -34,7 +31,7 @@ public class Challenge : Phase
         else
             Debug.Log("NPC chooses to challenge Human player");
 
-        nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+        nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand);
         stage = Stages.Exit;
     }
 
