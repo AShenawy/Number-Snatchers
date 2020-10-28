@@ -13,7 +13,7 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public Sprite face;
     public Sprite sleeve;
 
-    private RectTransform rt;
+    RectTransform rt;
 
     private void Start()
     {

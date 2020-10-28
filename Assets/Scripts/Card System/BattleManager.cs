@@ -111,25 +111,17 @@ public class BattleManager : MonoBehaviour
 
     void CompareInputAgainstExact()
     {
-        CardType type = playedHumanCard.cardType;
-        
         // calculate expected value
-        switch (type)
-        {
-            case CardType.Add:
-                break;
-
-            case CardType.Subtract:
-                break;
-
-            case CardType.Wild:
-                break;
-        }
+        int valExpected = currentNumber + playedHumanCard.value;
+        int valInput = guessHandler.submittedGuess;
+        
+        // update NPC player
+        nPCHand.EvaluatePlayerMove(valExpected, valInput);
     }
     
-    void UpdateCurrentNumber(int value)
+    void UpdateCurrentNumber()
     {
-        currentNumber += value;
+        currentNumber += playedHumanCard.value;
         currentNumberDisplay.text = currentNumber.ToString();
     }
 }
