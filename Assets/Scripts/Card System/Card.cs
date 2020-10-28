@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
@@ -9,8 +10,10 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     [Header("Interaction Parameters")]
     [Range(0, 100)] public float peekUpDistance;
+    public Sprite face;
+    public Sprite sleeve;
 
-    RectTransform rt;
+    private RectTransform rt;
 
     private void Start()
     {
@@ -36,7 +39,7 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         PlayerHand player = GetComponentInParent<PlayerHand>();
         if (player)
-            player.PlayCard(gameObject);
+            player.PlayCard(this);
     }
 }
 

@@ -4,9 +4,9 @@ using Utilities;
 
 public class PlayTable : MonoBehaviour
 {
-    public List<GameObject> cardsOnTable = new List<GameObject>();
+    public List<Card> cardsOnTable = new List<Card>();
 
-    public void PlaceOnTable(GameObject card)
+    public void PlaceOnTable(Card card)
     {
         cardsOnTable.Add(card);
         RectTransform rt = card.GetComponent<RectTransform>();

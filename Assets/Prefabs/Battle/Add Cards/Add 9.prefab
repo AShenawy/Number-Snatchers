@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: value
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1157847754792449563, guid: 240e43cb6e76c544fb1931db5cf6486e, type: 3}
+      propertyPath: sleeve
+      value: 
+      objectReference: {fileID: 21300000, guid: ededea7cc7754c14cbf3892a8cb1dea1, type: 3}
+    - target: {fileID: 1157847754792449563, guid: 240e43cb6e76c544fb1931db5cf6486e, type: 3}
+      propertyPath: face
+      value: 
+      objectReference: {fileID: 21300000, guid: 73e3cd86d9f074440bf07cd95f6661c9, type: 3}
     - target: {fileID: 6481121752663877588, guid: 240e43cb6e76c544fb1931db5cf6486e, type: 3}
       propertyPath: m_Sprite
       value: 

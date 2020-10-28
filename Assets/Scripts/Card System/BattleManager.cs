@@ -43,9 +43,15 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int currentRound = 0;
     private Phase currentPhase;
 
+    // Play data
+    private Card playedHumanCard;
+    private Card playedNPCCard;
+    
+
     private void OnEnable()
     {
         playerHand.humanCardPlayed += DisplayGuessInput;
+        playerHand.humanCardPlayed += UpdatePlayedCard;
         guessHandler.onInputSubmitted += CompareInputAgainstExact;
     }
 
@@ -90,28 +96,35 @@ public class BattleManager : MonoBehaviour
         ////battlePhase = BattlePhases.CardPick;
     }
 
-    void DisplayGuessInput(GameObject card)
+    void DisplayGuessInput(Card card)
     {
         guessHandler.gameObject.SetActive(true);
     }
-    /*
-    void NewRound()
+
+    void UpdatePlayedCard(Card card)
     {
-        // generate new target value for the round
-        GenerateTargetNumber();
-        currentRound++;
-        roundNumberDisplay.text = currentRound.ToString();
+        if (playerTurn == CurrentPlayer.Human)
+            playedHumanCard = card;
+        else
+            playedNPCCard = card;
     }
 
-    void GenerateTargetNumber()
-    {
-        targetNumber = Random.Range(5, 25);
-        targetNumberDisplay.text = targetNumber.ToString();
-    }
-    */
     void CompareInputAgainstExact()
     {
-        //TODO compare player guess input against what the value should exactly be.
+        CardType type = playedHumanCard.cardType;
+        
+        // calculate expected value
+        switch (type)
+        {
+            case CardType.Add:
+                break;
+
+            case CardType.Subtract:
+                break;
+
+            case CardType.Wild:
+                break;
+        }
     }
     
     void UpdateCurrentNumber(int value)
@@ -121,7 +134,4 @@ public class BattleManager : MonoBehaviour
     }
 }
 
-//public enum BattleModes { Beginner, Intermediate, Expert }
-
-//public enum BattlePhases { Deal, CardPick, Challenge, Attack, TurnSwitch }
 public enum CurrentPlayer { Human, NPC }

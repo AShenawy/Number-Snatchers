@@ -16,4 +16,4 @@ MonoBehaviour:
   health: 100
   enemyCard: {fileID: 21300000, guid: cfaa5ecb4f3271a47929ee8e82de6c9c, type: 3}
   battleStyle: 0
-  difficulty: 0
+  difficulty: 1

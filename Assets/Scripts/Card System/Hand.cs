@@ -4,16 +4,16 @@ using UnityEngine;
 
 public abstract class Hand : MonoBehaviour
 {
-    public List<GameObject> cardsInHand = new List<GameObject>();
+    public List<Card> cardsInHand = new List<Card>();
     public PlayTable table;
 
-    public void TakeCard(GameObject card)
+    public void TakeCard(Card card)
     {
         cardsInHand.Add(card);
         card.GetComponent<RectTransform>().SetParent(gameObject.transform, false);
     }
 
-    public virtual void PlayCard(GameObject card)
+    public virtual void PlayCard(Card card)
     {
         cardsInHand.Remove(card);
         table.PlaceOnTable(card);

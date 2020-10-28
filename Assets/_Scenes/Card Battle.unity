@@ -1115,7 +1115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15929c121dd0e6b4ead54a90dfa05b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 0
+  difficulty: 1
   battlePhase: 0
   playerTurn: 0
   roundNumberDisplay: {fileID: 541896829}
@@ -4202,18 +4202,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   additionCardsPrefabs:
-  - {fileID: 532889989234177420, guid: b971ab1a9d667b74a98e92ed4fecd792, type: 3}
-  - {fileID: 3013255028367480671, guid: f833e8345cfeb5346b0c00f6b19dd0a6, type: 3}
-  - {fileID: 6014506736708236112, guid: b0160d88cac4a4b4b81681adace554f3, type: 3}
-  - {fileID: 8387211032781728112, guid: e149b23e233e93148afad4465bdf547c, type: 3}
-  - {fileID: 1605825016982825323, guid: 57e2d458607cc234a9f7cdd22a8d73fa, type: 3}
-  - {fileID: 2980885648891771393, guid: b283e60b795ba084da8730ece3de0396, type: 3}
-  - {fileID: 8979878450513859064, guid: 1eb70ae366784a842b1c7b3f0a0e47af, type: 3}
-  - {fileID: 5346570566247297844, guid: d5e1f26953c826145aac1636abc6d55b, type: 3}
-  - {fileID: 4485854132563053961, guid: 8305cd012a1a0574cb3c0a36c6fcc063, type: 3}
+  - {fileID: 5657969310147786960, guid: b971ab1a9d667b74a98e92ed4fecd792, type: 3}
+  - {fileID: 6931368549600549379, guid: f833e8345cfeb5346b0c00f6b19dd0a6, type: 3}
+  - {fileID: 1916215128331763212, guid: b0160d88cac4a4b4b81681adace554f3, type: 3}
+  - {fileID: 4433031305876251692, guid: e149b23e233e93148afad4465bdf547c, type: 3}
+  - {fileID: 6893068034575164471, guid: 57e2d458607cc234a9f7cdd22a8d73fa, type: 3}
+  - {fileID: 6971055689926014813, guid: b283e60b795ba084da8730ece3de0396, type: 3}
+  - {fileID: 3854798005938019492, guid: 1eb70ae366784a842b1c7b3f0a0e47af, type: 3}
+  - {fileID: 275498139790294632, guid: d5e1f26953c826145aac1636abc6d55b, type: 3}
+  - {fileID: 8620141554211881173, guid: 8305cd012a1a0574cb3c0a36c6fcc063, type: 3}
   subtractionCardsPrefabs: []
   wildCardsPrefabs:
-  - {fileID: 6481121753402882887, guid: a03d69206cbb59d4d8bd13914976e10d, type: 3}
+  - {fileID: 1157847754792449563, guid: a03d69206cbb59d4d8bd13914976e10d, type: 3}
   deckCards: []
   graveyard: []
   cardsPerDeal: 5

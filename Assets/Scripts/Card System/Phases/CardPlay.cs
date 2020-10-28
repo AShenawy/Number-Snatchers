@@ -37,6 +37,7 @@ public class CardPlay : Phase
     {
         battleManager.playerHand.BlockCardInteractions(true);
         isCardPlayed = false;
+        guessHandler.onInputSubmitted -= OnCardPlayed;
         Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " played their card.");
         base.Exit();
     }
