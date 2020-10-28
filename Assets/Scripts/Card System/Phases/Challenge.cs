@@ -15,7 +15,7 @@ public class Challenge : Phase
 
     public override void Enter()
     {
-        Debug.Log("Entering Challenge phase. The " + battleManager.playerTurn + " will be challenged.");
+        Debug.Log("Entering Challenge phase. The " + battleManager.playerTurn + " player will be challenged.");
 
         playerHand = battleManager.playerHand;
         npcHand = battleManager.nPCHand;
@@ -25,14 +25,14 @@ public class Challenge : Phase
 
     public override void Update()
     {
-        // check who gets to challenge
+        // Let the opposite side challenge the current playing side
         if (battleManager.playerTurn == CurrentPlayer.Human)
         {
             //TODO show player option to challenge NPC
-            Debug.Log("Player chooses to challenge NPC");
+            npcHand.ChallengePlayer();
         }
         else
-            npcHand.ChallengePlayer();
+            Debug.Log("NPC chooses to challenge Human player");
 
         nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
         stage = Stages.Exit;

@@ -34,7 +34,7 @@ public class Start : Phase
 
     public override void Enter()
     {
-        Debug.Log("Entering Star phase");
+        Debug.Log("Entering Start phase");
 
         // set up player stats & display
         currentHpPlayer = startingHpPlayer;

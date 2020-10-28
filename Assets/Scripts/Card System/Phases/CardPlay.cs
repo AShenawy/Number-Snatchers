@@ -18,7 +18,7 @@ public class CardPlay : Phase
 
     public override void Enter()
     {
-        Debug.Log("Entering Card Play phase. It's " + battleManager.playerTurn + "'s turn to play.");
+        Debug.Log("Entering Card Play phase. It's " + battleManager.playerTurn + " player's turn to play.");
 
         if (battleManager.playerTurn == CurrentPlayer.Human)
             battleManager.playerHand.BlockCardInteractions(false);
@@ -40,7 +40,7 @@ public class CardPlay : Phase
         battleManager.playerHand.BlockCardInteractions(true);
         isCardPlayed = false;
         guessHandler.onInputSubmitted -= OnCardPlayed;
-        Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " played their card.");
+        Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " player played their card.");
         base.Exit();
     }
 

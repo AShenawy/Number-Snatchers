@@ -26,7 +26,7 @@ public class CardDeal : Phase
 
     public override void Enter()
     {
-        Debug.Log("Entering Card Deal phase. It's " + player + "'s turn to be dealt.");
+        Debug.Log("Entering Card Deal phase. It's " + player + " player's turn to be dealt.");
 
         // deal cards based on who's turn it is
         switch (player)
@@ -58,7 +58,7 @@ public class CardDeal : Phase
         // reset the deal ended bool and unsub to event
         dealEnded = false;
         battleManager.onDealEnded -= OnCardDealEnded;
-        Debug.Log("Exiting Deal phase after all cards are dealt to " + player +".");
+        Debug.Log("Exiting Deal phase after all cards are dealt to " + player +" player.");
         base.Exit();
     }
 

@@ -20,13 +20,14 @@ public class TurnEnd : Phase
 
     public override void Update()
     {
-        // if a side lost the battle then end it, else switch turns.
+        // if a side lost the battle then end it
         if (currentHpNPC <= 0 || currentHpPlayer <= 0)
         {
             Debug.Log("A side has reached 0 HP. Game is over");
             nextPhase = new EndBattle(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
             stage = Stages.Exit;
         }
+        // if the target is reached or crossed then start a new round
         else if (battleManager.currentNumber >= battleManager.targetNumber)
         {
             Debug.Log("Target number is reached. Starting a new round.");
@@ -34,9 +35,10 @@ public class TurnEnd : Phase
             nextPhase = new NewRound(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
             stage = Stages.Exit;
         }
+        // if neither of the above then continue the same round and switch turns
         else
         {
-            Debug.Log(battleManager.playerTurn + "'s turn has ended. Switching sides.");
+            Debug.Log(battleManager.playerTurn + " player's turn has ended. Switching sides.");
             battleManager.SwitchTurn();
             nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
             stage = Stages.Exit;
