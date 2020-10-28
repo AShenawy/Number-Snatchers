@@ -67,14 +67,6 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //dealer.FillDeck(battleMode);
-
-        // start a new round
-        //NewRound();
-        //StartCoroutine(DealCards());
-
-        // hide the guess input screen at start
-        //guessHandler.gameObject.SetActive(false);
         currentPhase = new Start(this, playerStats, nPCData, playerHand, nPCHand);
         difficulty = nPCData.difficulty;
     }
@@ -93,10 +85,6 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         dealer.DealCards(hand);
         onDealEnded?.Invoke();
-
-        //yield return new WaitForSeconds(1f);
-        //dealer.DealCards(nPCHand);
-        ////battlePhase = BattlePhases.CardPick;
     }
 
     void DisplayGuessInput(Card card)
