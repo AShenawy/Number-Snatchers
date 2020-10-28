@@ -18,6 +18,8 @@ public class CardPlay : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering Card Play phase. It's " + battleManager.playerTurn + "'s turn to play.");
+
         if (battleManager.playerTurn == CurrentPlayer.Human)
             battleManager.playerHand.BlockCardInteractions(false);
 

@@ -15,6 +15,8 @@ public class NewRound : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering New Round phase.");
+
         UpdateRoundCounter();
         GenerateTargetNumber();
 
@@ -46,7 +48,7 @@ public class NewRound : Phase
     void DelayedExit()
     {
         Debug.Log("Exiting New Round phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
-        nextPhase = new Deal(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+        nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
         stage = Stages.Exit;
     }
 }

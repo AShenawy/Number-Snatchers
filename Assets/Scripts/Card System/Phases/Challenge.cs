@@ -15,6 +15,8 @@ public class Challenge : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering Challenge phase. The " + battleManager.playerTurn + " will be challenged.");
+
         playerHand = battleManager.playerHand;
         npcHand = battleManager.nPCHand;
 

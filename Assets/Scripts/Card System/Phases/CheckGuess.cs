@@ -15,6 +15,7 @@ public class CheckGuess : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering Guess Check phase.");
         base.Enter();
     }
 

@@ -34,6 +34,8 @@ public class Start : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering Star phase");
+
         // set up player stats & display
         currentHpPlayer = startingHpPlayer;
         battleManager.playerCurrentHP = currentHpPlayer;

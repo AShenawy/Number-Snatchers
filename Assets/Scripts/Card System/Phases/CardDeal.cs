@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 // This phase will occur every time the game switches turns between player and NPC. It is the 1st phase in the inner loop
-public class Deal : Phase
+public class CardDeal : Phase
 {
     PlayerHand plrHand;
     NPCHand npcHand;
@@ -12,7 +12,7 @@ public class Deal : Phase
     //float counter;
     //float exitTimer = 1f;
 
-    public Deal(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, Image _plrHpDisplay, Image _npcHpDisplay)
+    public CardDeal(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, Image _plrHpDisplay, Image _npcHpDisplay)
            : base(_bm, _plStats, _npcData, _plrHpDisplay, _npcHpDisplay)
     {
         name = Phases.CardDeal;
@@ -26,6 +26,8 @@ public class Deal : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering Card Deal phase. It's " + player + "'s turn to be dealt.");
+
         // deal cards based on who's turn it is
         switch (player)
         {

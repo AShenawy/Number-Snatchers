@@ -14,6 +14,7 @@ public class TurnEnd : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering Turn End phase.");
         base.Enter();
     }
 
@@ -28,14 +29,16 @@ public class TurnEnd : Phase
         }
         else if (battleManager.currentNumber >= battleManager.targetNumber)
         {
+            Debug.Log("Target number is reached. Starting a new round.");
             battleManager.SwitchTurn();
             nextPhase = new NewRound(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
             stage = Stages.Exit;
         }
         else
         {
+            Debug.Log(battleManager.playerTurn + "'s turn has ended. Switching sides.");
             battleManager.SwitchTurn();
-            nextPhase = new Deal(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
+            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHpDisplay, npcHpDisplay);
             stage = Stages.Exit;
         }    
     }
