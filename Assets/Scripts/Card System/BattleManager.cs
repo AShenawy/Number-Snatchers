@@ -57,13 +57,11 @@ public class BattleManager : MonoBehaviour
     {
         playerHand.humanCardPlayed += DisplayGuessInput;
         playerHand.humanCardPlayed += UpdatePlayInfo;
-        guessHandler.onInputSubmitted += CompareInputAgainstExact;
     }
 
     private void OnDisable()
     {
         playerHand.humanCardPlayed -= DisplayGuessInput;
-        guessHandler.onInputSubmitted -= CompareInputAgainstExact;
     }
 
     // Start is called before the first frame update
@@ -77,7 +75,7 @@ public class BattleManager : MonoBehaviour
 
         // hide the guess input screen at start
         //guessHandler.gameObject.SetActive(false);
-        currentPhase = new Start(this, playerStats, nPCData, playerHPDisplay, nPCHPDisplay);
+        currentPhase = new Start(this, playerStats, nPCData, playerHand, nPCHand);
         difficulty = nPCData.difficulty;
     }
 
