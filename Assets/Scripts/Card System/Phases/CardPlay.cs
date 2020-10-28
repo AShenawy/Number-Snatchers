@@ -46,6 +46,17 @@ public class CardPlay : Phase
 
     void OnCardPlayed()
     {
+        CompareInputAgainstExact();
         isCardPlayed = true;
+    }
+
+    void CompareInputAgainstExact()
+    {
+        // calculate expected value
+        int valExpected = battleManager.currentNumber + battleManager.playedHumanCard.value;
+        int valInput = guessHandler.submittedGuess;
+
+        // update NPC player
+        nPCHand.EvaluatePlayerMove(valExpected, valInput);
     }
 }

@@ -9,8 +9,8 @@ public class Phase
     protected BattleManager battleManager;
     protected EnemyBattleData npcData;
     protected Stats playerStats;
-    protected Image playerHpDisplay;
-    protected Image npcHpDisplay;
+    protected PlayerHand playerHand;
+    protected NPCHand npcHand;
     
     protected Phase nextPhase;
     protected int startingHpPlayer;
@@ -18,13 +18,13 @@ public class Phase
     protected int currentHpPlayer;
     protected int currentHpNPC;
 
-    public Phase(BattleManager _battleManager, Stats _playerStats, EnemyBattleData _npcData, Image _playerHpDisplay, Image _npcHpDisplay)
+    public Phase(BattleManager _battleManager, Stats _playerStats, EnemyBattleData _npcData, PlayerHand _playerHand, NPCHand _npcHand)
     {
         battleManager = _battleManager;
         npcData = _npcData;
         playerStats = _playerStats;
-        playerHpDisplay = _playerHpDisplay;
-        npcHpDisplay = _npcHpDisplay;
+        playerHand = _playerHand;
+        npcHand = _npcHand;
         startingHpPlayer = playerStats.hP;
         currentHpPlayer = battleManager.playerCurrentHP;
         startingHpNPC = npcData.health;

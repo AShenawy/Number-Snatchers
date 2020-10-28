@@ -46,11 +46,11 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int currentRound = 0;
     [HideInInspector] public int playerCurrentHP;
     [HideInInspector] public int npcCurrentHP;
+    [HideInInspector] public Card playedHumanCard;
+    [HideInInspector] public Card playedNPCCard;
 
     // Play data
     Phase currentPhase;
-    Card playedHumanCard;
-    Card playedNPCCard;
     
 
     private void OnEnable()
@@ -114,16 +114,6 @@ public class BattleManager : MonoBehaviour
             playedNPCCard = card;
     }
 
-    void CompareInputAgainstExact()
-    {
-        // calculate expected value
-        int valExpected = currentNumber + playedHumanCard.value;
-        int valInput = guessHandler.submittedGuess;
-        
-        // update NPC player
-        nPCHand.EvaluatePlayerMove(valExpected, valInput);
-    }
-    
     void UpdateCurrentNumber()
     {
         currentNumber += playedHumanCard.value;
