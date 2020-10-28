@@ -30,6 +30,9 @@ public class BattleManager : MonoBehaviour
     public Dealer dealer;
     public GuessHandler guessHandler;
 
+    [Header("Flow Cards")]
+    public GameObject turnSwitchCard;
+
     [Header("Player Parameters")]
     public PlayerHand playerHand;
     public Stats playerStats;
@@ -39,19 +42,21 @@ public class BattleManager : MonoBehaviour
     public EnemyBattleData nPCData;
 
     [HideInInspector] public int targetNumber;
-    [HideInInspector] public int currentNumber;
+     public int currentNumber;
     [HideInInspector] public int currentRound = 0;
-    private Phase currentPhase;
+    [HideInInspector] public int playerCurrentHP;
+    [HideInInspector] public int npcCurrentHP;
 
     // Play data
-    private Card playedHumanCard;
-    private Card playedNPCCard;
+    Phase currentPhase;
+    Card playedHumanCard;
+    Card playedNPCCard;
     
 
     private void OnEnable()
     {
         playerHand.humanCardPlayed += DisplayGuessInput;
-        playerHand.humanCardPlayed += UpdatePlayedCard;
+        playerHand.humanCardPlayed += UpdatePlayInfo;
         guessHandler.onInputSubmitted += CompareInputAgainstExact;
     }
 
@@ -101,7 +106,7 @@ public class BattleManager : MonoBehaviour
         guessHandler.gameObject.SetActive(true);
     }
 
-    void UpdatePlayedCard(Card card)
+    void UpdatePlayInfo(Card card)
     {
         if (playerTurn == CurrentPlayer.Human)
             playedHumanCard = card;
@@ -123,6 +128,14 @@ public class BattleManager : MonoBehaviour
     {
         currentNumber += playedHumanCard.value;
         currentNumberDisplay.text = currentNumber.ToString();
+    }
+
+    public void SwitchTurn()
+    {
+        if (playerTurn == CurrentPlayer.Human)
+            playerTurn = CurrentPlayer.NPC;
+        else
+            playerTurn = CurrentPlayer.Human;
     }
 }
 

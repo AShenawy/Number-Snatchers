@@ -1128,6 +1128,7 @@ MonoBehaviour:
   currentPhaseText: {fileID: 1314481813}
   dealer: {fileID: 2005228443}
   guessHandler: {fileID: 1889083661}
+  turnSwitchCard: {fileID: 773670270360090036, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
   playerHand: {fileID: 1398298046}
   playerStats:
     hP: 100
@@ -4110,7 +4111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1889083660
 RectTransform:
   m_ObjectHideFlags: 0

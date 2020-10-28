@@ -35,8 +35,8 @@ public class Start : Phase
     public override void Enter()
     {
         // set up player stats & display
-        startingHpPlayer = playerStats.hP;
         currentHpPlayer = startingHpPlayer;
+        battleManager.playerCurrentHP = currentHpPlayer;
         playerHpDisplay.fillAmount = currentHpPlayer / startingHpPlayer;
         // prevent player from playing cards until CardPick phase
         plrHand.BlockCardInteractions(true);
@@ -44,8 +44,8 @@ public class Start : Phase
         // set up opponent stats & display
         npcCard.sprite = npcData.enemyCard;
         npcNameDisplay.text = npcData.enemyName;
-        startingHpNPC = npcData.health;
         currentHpNPC = startingHpNPC;
+        battleManager.npcCurrentHP = currentHpNPC;
         npcHpDisplay.fillAmount = currentHpNPC / startingHpNPC;
 
         // set up deck

@@ -25,6 +25,10 @@ public class Phase
         playerStats = _playerStats;
         playerHpDisplay = _playerHpDisplay;
         npcHpDisplay = _npcHpDisplay;
+        startingHpPlayer = playerStats.hP;
+        currentHpPlayer = battleManager.playerCurrentHP;
+        startingHpNPC = npcData.health;
+        currentHpNPC = battleManager.npcCurrentHP;
         stage = Stages.Enter;
     }
 
