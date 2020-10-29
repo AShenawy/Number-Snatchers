@@ -42,7 +42,7 @@ public class BattleManager : MonoBehaviour
     public EnemyBattleData nPCData;
 
     [HideInInspector] public int targetNumber;
-     public int currentNumber;
+    [HideInInspector] public int currentNumber;
     [HideInInspector] public int currentRound = 0;
     [HideInInspector] public int playerCurrentHP;
     [HideInInspector] public int npcCurrentHP;

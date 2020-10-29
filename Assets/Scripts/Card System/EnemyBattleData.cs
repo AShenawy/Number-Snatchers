@@ -17,5 +17,5 @@ public class EnemyBattleData : ScriptableObject
     public EnemyDifficulty difficulty;
 }
 
-public enum EnemyBattleStyles { Normal}
+public enum EnemyBattleStyles { Normal }
 public enum EnemyDifficulty { Beginner, Intermediate, Expert }

@@ -13,6 +13,7 @@ public class EndBattle : Phase
 
     public override void Enter()
     {
+        Debug.Log("Entering Battle End phase.");
         base.Enter();
     }
 
@@ -23,6 +24,7 @@ public class EndBattle : Phase
 
     public override void Exit()
     {
+        Debug.Log("Exiting Battle End Phase.");
         base.Exit();
     }
 }

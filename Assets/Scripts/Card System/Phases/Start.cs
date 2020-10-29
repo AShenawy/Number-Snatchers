@@ -20,8 +20,6 @@ public class Start : Phase
         name = Phases.BattleStart;
         
         cardDealer = battleManager.dealer;
-        playerHand = battleManager.playerHand;
-        npcHand = battleManager.nPCHand;
         npcCard = battleManager.nPCCardDisplay;
         npcNameDisplay = battleManager.nPCNameDisplay;
 
@@ -42,6 +40,7 @@ public class Start : Phase
         playerHand.BlockCardInteractions(true);
 
         // set up opponent stats & display
+        npcHand.data = npcData;
         npcCard.sprite = npcData.enemyCard;
         npcNameDisplay.text = npcData.enemyName;
         currentHpNPC = startingHpNPC;

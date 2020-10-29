@@ -14,14 +14,18 @@ public class CardPlay : Phase
 
         guessHandler = battleManager.guessHandler;
         guessHandler.onInputSubmitted += OnCardPlayed;
+        npcHand.onCardPlayed += OnCardPlayed;
     }
 
     public override void Enter()
     {
         Debug.Log("Entering Card Play phase. It's " + battleManager.playerTurn + " player's turn to play.");
 
+        // if it's human player's trun allow interaction with cards. else let the npc play
         if (battleManager.playerTurn == CurrentPlayer.Human)
             playerHand.BlockCardInteractions(false);
+        else
+            npcHand.PlayTurn();
 
         base.Enter();
     }
@@ -40,17 +44,20 @@ public class CardPlay : Phase
         playerHand.BlockCardInteractions(true);
         isCardPlayed = false;
         guessHandler.onInputSubmitted -= OnCardPlayed;
+        npcHand.onCardPlayed -= OnCardPlayed;
         Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " player played their card.");
         base.Exit();
     }
 
     void OnCardPlayed()
     {
-        CompareInputAgainstExact();
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+            CompareExpectedAgainstInput();
+        
         isCardPlayed = true;
     }
 
-    void CompareInputAgainstExact()
+    void CompareExpectedAgainstInput()
     {
         // calculate expected value
         int valExpected = battleManager.currentNumber + battleManager.playedHumanCard.value;
