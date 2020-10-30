@@ -121,13 +121,13 @@ public class NPCHand : Hand
                     bestCard = potCard;
                 }
             }
+        }
 
-            // if no card was able to fulfil the selection conditions, pick a random card
-            if (bestCard == null)
-            {
-                bestCard = cardsInHand[Random.Range(0, cardsInHand.Count)];
-                print("NPC couldn't find card satisfying conditions. Picking a random card");
-            }
+        // if no card was able to fulfil the selection conditions, pick a random card
+        if (bestCard == null)
+        {
+            bestCard = cardsInHand[Random.Range(0, cardsInHand.Count)];
+            print("NPC couldn't find card satisfying conditions. Picking a random card");
         }
 
         return bestCard;
