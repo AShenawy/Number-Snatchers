@@ -6,10 +6,13 @@ using System.Collections;
 // in this phase the game checks the guesses and challenges to ensure it's going forward correctly
 public class CheckGuess : Phase
 {
-    public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
+    bool isCurrentPlayerChallenged;
+
+    public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isChallenged)
        : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.GuessCheck;
+        isCurrentPlayerChallenged = _isChallenged;
     }
 
     public override void Enter()

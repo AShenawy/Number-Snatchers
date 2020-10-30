@@ -5,6 +5,9 @@
 public class NPCHand : Hand
 {
     public event System.Action<Card> onCardPlayed;
+    public event System.Action onChallengeAccepted;
+    public event System.Action onChallengePassed;
+
     public EnemyBattleData data;
     bool playerGuessCorrect;
     int targetNumber;
@@ -27,16 +30,25 @@ public class NPCHand : Hand
         if (expected == playerGuess)
             playerGuessCorrect = true;
         else
+        {
             playerGuessCorrect = false;
+            guess = expected;   // store the correct value for the challenge phase
+        }
     }
 
     public void ChallengePlayer()
     {
         //TODO challenging functionality
         if (playerGuessCorrect)
+        {
             print("Player guessed correctly. NPC will pass the challenge.");
+            onChallengePassed?.Invoke();
+        }
         else
+        {
             print("Player guess is incorrect. NPC will challenge.");
+            onChallengeAccepted?.Invoke();
+        }
     }
 
     public void PlayTurn()
