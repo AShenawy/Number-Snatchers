@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
+// this phase occurs after cards are dealt and it's one side's turn to play a card
 public class CardPlay : Phase
 {
     GuessHandler guessHandler;
@@ -25,7 +26,11 @@ public class CardPlay : Phase
         if (battleManager.playerTurn == CurrentPlayer.Human)
             playerHand.BlockCardInteractions(false);
         else
+        {
+            // inform npc the latest current number and it's their turn to play
+            npcHand.UpdateCurrentNumber(battleManager.currentNumber);
             npcHand.PlayTurn();
+        }
 
         base.Enter();
     }

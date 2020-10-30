@@ -41,8 +41,11 @@ public class NewRound : Phase
     void GenerateTargetNumber()
     {
         int newTarget = Random.Range(5, 25);
+
+        // inform battle manager and npc with the new target
         battleManager.targetNumber = newTarget;
         battleManager.targetNumberDisplay.text = newTarget.ToString();
+        npcHand.UpdateTargetNumber(newTarget);
     }
 
     void DelayedExit()

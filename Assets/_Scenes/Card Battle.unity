@@ -1117,7 +1117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 1
   battlePhase: 0
-  playerTurn: 0
+  playerTurn: 1
   roundNumberDisplay: {fileID: 541896829}
   targetNumberDisplay: {fileID: 2062165065}
   currentNumberDisplay: {fileID: 1518391645}
@@ -1137,6 +1137,10 @@ MonoBehaviour:
   targetNumber: 0
   currentNumber: 0
   currentRound: 0
+  playerCurrentHP: 0
+  npcCurrentHP: 0
+  playedHumanCard: {fileID: 0}
+  playedNPCCard: {fileID: 0}
 --- !u!1 &318339599
 GameObject:
   m_ObjectHideFlags: 0
@@ -4311,6 +4315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardsInHand: []
   table: {fileID: 140299574}
+  data: {fileID: 0}
 --- !u!1 &2050073323
 GameObject:
   m_ObjectHideFlags: 0
