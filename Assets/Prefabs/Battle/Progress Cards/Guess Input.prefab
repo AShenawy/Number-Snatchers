@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 3978924007038690265}
+  submitButton: {fileID: 6580347925718026352}
   humanGuess: 0
 --- !u!1 &1658250163578348704
 GameObject:

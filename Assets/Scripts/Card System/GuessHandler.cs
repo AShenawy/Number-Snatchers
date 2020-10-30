@@ -3,12 +3,18 @@ using UnityEngine.UI;
 
 public class GuessHandler : MonoBehaviour
 {
-    public delegate void OnSubmit(int val);
-    public event OnSubmit onInputSubmitted;
-    
+    public event System.Action<int> onInputSubmitted;
     public InputField input;
+    public Button submitButton;
     public int humanGuess;
 
+    private void Update()
+    {
+        if (input.text == "")
+            submitButton.interactable = false;
+        else
+            submitButton.interactable = true;
+    }
 
     public void Submit()
     {
@@ -20,9 +26,4 @@ public class GuessHandler : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    //public void ClearInputField()
-    //{
-    //    input.text = "";
-    //}
 }

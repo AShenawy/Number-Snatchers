@@ -75,6 +75,7 @@ public class CardPlay : Phase
     void StoreHumanGuess(int guess)
     {
         humanGuess = guess;
+        playerHand.guess = guess;
         OnCardPlayed(playedHumanCard);
     }
 

@@ -6,10 +6,11 @@ public class NPCHand : Hand
 {
     public event System.Action<Card> onCardPlayed;
     public EnemyBattleData data;
-    public int guess;
     bool playerGuessCorrect;
     int targetNumber;
     int currentNumber;
+    public Card lastPlayedCard { get; private set; }
+    public int guess { get; private set; }
 
     public void UpdateTargetNumber(int num)
     {
@@ -52,6 +53,7 @@ public class NPCHand : Hand
     {
         base.PlayCard(card);
         guess = GuessValue(card);
+        lastPlayedCard = card;
         onCardPlayed?.Invoke(card);
     }
 
@@ -132,5 +134,11 @@ public class NPCHand : Hand
         }
 
         return false;
+    }
+
+    public void ClearTurnInfo()
+    {
+        lastPlayedCard = null;
+        guess = 0;
     }
 }

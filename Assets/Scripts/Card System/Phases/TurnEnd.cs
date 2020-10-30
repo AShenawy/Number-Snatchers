@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 
 
 // this is the last phase in each loop and determines whether a new loop begins or the battle ends
@@ -48,6 +46,15 @@ public class TurnEnd : Phase
     public override void Exit()
     {
         Debug.Log("Exiting Turn End phase");
+        ClearTurnInfo();
         base.Exit();
+    }
+
+    void ClearTurnInfo()
+    {
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+            playerHand.ClearTurnInfo();
+        else
+            npcHand.ClearTurnInfo();
     }
 }

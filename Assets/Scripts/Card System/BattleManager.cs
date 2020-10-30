@@ -31,6 +31,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("Flow Cards")]      // Prefabs
     public GuessHandler guessHandlerCardPrefab;
+    public ChallengeHandler humanChallengerCardPrefab;
     public GameObject turnSwitchCardPrefab;
 
     [Header("Player Parameters")]
