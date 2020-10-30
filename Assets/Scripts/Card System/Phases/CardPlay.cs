@@ -83,11 +83,11 @@ public class CardPlay : Phase
         if (battleManager.playerTurn == CurrentPlayer.Human)
         {
             CompareExpectedAgainstInput();
-            Debug.Log("Human played a " + playedCard.cardType + " " + playedCard.value + " and guessed " + humanGuess);
+            Debug.Log($"<color=green>Human played a {playedCard.cardType} {playedCard.value} and guessed {humanGuess}.</color>");
         }
         else
         {
-            Debug.Log("NPC played a " + playedCard.cardType + " "+ playedCard.value + " and guessed " + npcHand.guess);
+            Debug.Log($"<color=blue>NPC played a {playedCard.cardType} {playedCard.value} and guessed {npcHand.guess}.</color>");
         }
         
         isCardPlayed = true;

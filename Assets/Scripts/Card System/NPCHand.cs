@@ -52,15 +52,25 @@ public class NPCHand : Hand
     public override void PlayCard(Card card)
     {
         base.PlayCard(card);
-        GuessValue(card);
+        guess = GuessValue(card);
         onCardPlayed?.Invoke(card);
     }
 
-    void GuessValue(Card card)
+    int GuessValue(Card card)
     {
         // currently NPC always makes a correct guess
-        //TODO make the NPC make some wrong guesses on random basis
-        guess = currentNumber + card.value;
+        
+        // set a 10% chance where the NPC might guess wrong
+        if (UnityEngine.Random.Range(0, 10) < 1)
+        {
+            // NPC will make an error in the summation between -2 and 2
+            // However there's 20% chance the error is 0 meaning no mistake
+            int error = UnityEngine.Random.Range(-2, 3);
+            
+            return currentNumber + card.value + error;
+        }
+        
+        return currentNumber + card.value;
     }
 
     Card FindBestCard()
