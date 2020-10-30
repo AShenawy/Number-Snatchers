@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 // This is a representation of the comnputer opponent's behaviour
 public class NPCHand : Hand
 {
-    public event Action<Card> onCardPlayed;
+    public event System.Action<Card> onCardPlayed;
     public EnemyBattleData data;
     public int guess;
     bool playerGuessCorrect;
@@ -61,11 +60,11 @@ public class NPCHand : Hand
         // currently NPC always makes a correct guess
         
         // set a 10% chance where the NPC might guess wrong
-        if (UnityEngine.Random.Range(0, 10) < 1)
+        if (Random.Range(0, 10) < 1)
         {
             // NPC will make an error in the summation between -2 and 2
             // However there's 20% chance the error is 0 meaning no mistake
-            int error = UnityEngine.Random.Range(-2, 3);
+            int error = Random.Range(-2, 3);
             
             return currentNumber + card.value + error;
         }
@@ -112,7 +111,7 @@ public class NPCHand : Hand
             // if no card was able to fulfil the selection conditions, pick a random card
             if (bestCard == null)
             {
-                bestCard = cardsInHand[UnityEngine.Random.Range(0, cardsInHand.Count)];
+                bestCard = cardsInHand[Random.Range(0, cardsInHand.Count)];
                 print("NPC couldn't find card satisfying conditions. Picking a random card");
             }
         }

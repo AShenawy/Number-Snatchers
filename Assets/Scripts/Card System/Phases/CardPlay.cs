@@ -5,7 +5,7 @@ using System.Collections;
 // this phase occurs after cards are dealt and it's one side's turn to play a card
 public class CardPlay : Phase
 {
-    GuessHandler guessHandlerPrefab;
+    GuessHandler guessHandler;
     bool isCardPlayed;
     Card playedHumanCard;
     int humanGuess;
@@ -15,7 +15,6 @@ public class CardPlay : Phase
     {
         name = Phases.CardPick;
 
-        guessHandlerPrefab = battleManager.guessHandler;
         playerHand.humanCardPlayed += OnHumanCardPlayed;
         npcHand.onCardPlayed += OnCardPlayed;
     }
@@ -53,7 +52,8 @@ public class CardPlay : Phase
         
         // unsub from events
         playerHand.humanCardPlayed -= OnHumanCardPlayed;
-        guessHandlerPrefab.onInputSubmitted -= StoreHumanGuess;
+        if (guessHandler)
+            guessHandler.onInputSubmitted -= StoreHumanGuess;
         npcHand.onCardPlayed -= OnCardPlayed;
 
         Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " player played their card.");
@@ -68,8 +68,8 @@ public class CardPlay : Phase
 
     void DisplayGuessHandler()
     {
-        GuessHandler gh = GameObject.Instantiate(guessHandlerPrefab, battleManager.transform);
-        gh.onInputSubmitted += StoreHumanGuess;
+        guessHandler = GameObject.Instantiate(battleManager.guessHandlerCardPrefab, battleManager.transform);
+        guessHandler.onInputSubmitted += StoreHumanGuess;
     }
 
     void StoreHumanGuess(int guess)

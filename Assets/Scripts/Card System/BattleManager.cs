@@ -30,8 +30,8 @@ public class BattleManager : MonoBehaviour
     public Dealer dealer;
 
     [Header("Flow Cards")]      // Prefabs
-    public GuessHandler guessHandler;
-    public GameObject turnSwitchCard;
+    public GuessHandler guessHandlerCardPrefab;
+    public GameObject turnSwitchCardPrefab;
 
     [Header("Player Parameters")]
     public PlayerHand playerHand;
