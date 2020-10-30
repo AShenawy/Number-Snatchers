@@ -74,7 +74,15 @@ public class NPCHand : Hand
             // then it's wild card
             else
             {
-                print(gameObject.name + " is finding best wild card.");
+                int possibleValue = Mathf.Clamp(Mathf.Abs(targetNumber - currentNumber), 1, 9);
+                potCard.SetWildValue(possibleValue);
+
+                // only play the wild card if there isn't a card already with the same value
+                if (HasCardAsWildValue(possibleValue) == false)
+                {
+                    closestToTarget = targetNumber - (currentNumber + possibleValue);
+                    bestCard = potCard;
+                }
             }
 
             // if no card was able to fulfil the selection conditions, pick a random card
@@ -86,5 +94,20 @@ public class NPCHand : Hand
         }
 
         return bestCard;
+    }
+
+    bool HasCardAsWildValue(int wildVal)
+    {
+        foreach (Card card in cardsInHand)
+        {
+            // check only non-wild cards in hand
+            if (card.cardType == CardType.Add || card.cardType == CardType.Subtract)
+            {
+                if (card.value == wildVal)
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

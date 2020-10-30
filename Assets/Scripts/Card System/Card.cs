@@ -41,6 +41,11 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         if (player)
             player.PlayCard(this);
     }
+
+    public void SetWildValue(int val)
+    {
+        value = Mathf.Clamp(val, -9, 9);
+    }
 }
 
 public enum CardType { Add, Subtract, Wild}
