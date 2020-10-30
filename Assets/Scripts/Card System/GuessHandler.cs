@@ -3,21 +3,26 @@ using UnityEngine.UI;
 
 public class GuessHandler : MonoBehaviour
 {
-    public delegate void OnSubmit();
+    public delegate void OnSubmit(int val);
     public event OnSubmit onInputSubmitted;
     
     public InputField input;
-    public int submittedGuess;
+    public int humanGuess;
 
 
     public void Submit()
     {
-        submittedGuess = int.Parse(input.text);
-        onInputSubmitted?.Invoke();
+        humanGuess = int.Parse(input.text);
+        onInputSubmitted?.Invoke(humanGuess);
     }
 
-    public void ClearInputField()
+    public void DestroyObject()
     {
-        input.text = "";
+        Destroy(gameObject);
     }
+
+    //public void ClearInputField()
+    //{
+    //    input.text = "";
+    //}
 }

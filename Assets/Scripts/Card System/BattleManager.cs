@@ -28,9 +28,9 @@ public class BattleManager : MonoBehaviour
 
     [Header("Controllers")]
     public Dealer dealer;
-    public GuessHandler guessHandler;
 
-    [Header("Flow Cards")]
+    [Header("Flow Cards")]      // Prefabs
+    public GuessHandler guessHandler;
     public GameObject turnSwitchCard;
 
     [Header("Player Parameters")]
@@ -46,23 +46,10 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int currentRound = 0;
     [HideInInspector] public int playerCurrentHP;
     [HideInInspector] public int npcCurrentHP;
-    [HideInInspector] public Card playedHumanCard;
-    [HideInInspector] public Card playedNPCCard;
 
     // Play data
     Phase currentPhase;
     
-
-    private void OnEnable()
-    {
-        playerHand.humanCardPlayed += DisplayGuessInput;
-        playerHand.humanCardPlayed += UpdatePlayInfo;
-    }
-
-    private void OnDisable()
-    {
-        playerHand.humanCardPlayed -= DisplayGuessInput;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -85,25 +72,6 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         dealer.DealCards(hand);
         onDealEnded?.Invoke();
-    }
-
-    void DisplayGuessInput(Card card)
-    {
-        guessHandler.gameObject.SetActive(true);
-    }
-
-    void UpdatePlayInfo(Card card)
-    {
-        if (playerTurn == CurrentPlayer.Human)
-            playedHumanCard = card;
-        else
-            playedNPCCard = card;
-    }
-
-    void UpdateCurrentNumber()
-    {
-        currentNumber += playedHumanCard.value;
-        currentNumberDisplay.text = currentNumber.ToString();
     }
 
     public void SwitchTurn()

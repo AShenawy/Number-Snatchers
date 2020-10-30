@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
-public static class UIFuncs
+
+namespace Utilities
 {
-    public static void ResetRect(RectTransform rectTransform)
+    public static class UIFuncs
     {
-        rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        rectTransform.anchoredPosition = Vector2.zero;
+        public static void ResetRect(RectTransform rectTransform)
+        {
+            rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            rectTransform.anchoredPosition = Vector2.zero;
+        }
     }
 }

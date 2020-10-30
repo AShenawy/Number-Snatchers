@@ -5,16 +5,18 @@ using System.Collections;
 // this phase occurs after cards are dealt and it's one side's turn to play a card
 public class CardPlay : Phase
 {
-    GuessHandler guessHandler;
+    GuessHandler guessHandlerPrefab;
     bool isCardPlayed;
+    Card playedHumanCard;
+    int humanGuess;
 
     public CardPlay(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
            : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.CardPick;
 
-        guessHandler = battleManager.guessHandler;
-        guessHandler.onInputSubmitted += OnCardPlayed;
+        guessHandlerPrefab = battleManager.guessHandler;
+        playerHand.humanCardPlayed += OnHumanCardPlayed;
         npcHand.onCardPlayed += OnCardPlayed;
     }
 
@@ -48,16 +50,45 @@ public class CardPlay : Phase
     {
         playerHand.BlockCardInteractions(true);
         isCardPlayed = false;
-        guessHandler.onInputSubmitted -= OnCardPlayed;
+        
+        // unsub from events
+        playerHand.humanCardPlayed -= OnHumanCardPlayed;
+        guessHandlerPrefab.onInputSubmitted -= StoreHumanGuess;
         npcHand.onCardPlayed -= OnCardPlayed;
+
         Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " player played their card.");
         base.Exit();
     }
 
-    void OnCardPlayed()
+    void OnHumanCardPlayed(Card playedCard)
+    {
+        playedHumanCard = playedCard;
+        DisplayGuessHandler();
+    }
+
+    void DisplayGuessHandler()
+    {
+        GuessHandler gh = GameObject.Instantiate(guessHandlerPrefab, battleManager.transform);
+        gh.onInputSubmitted += StoreHumanGuess;
+    }
+
+    void StoreHumanGuess(int guess)
+    {
+        humanGuess = guess;
+        OnCardPlayed(playedHumanCard);
+    }
+
+    void OnCardPlayed(Card playedCard)
     {
         if (battleManager.playerTurn == CurrentPlayer.Human)
+        {
             CompareExpectedAgainstInput();
+            Debug.Log("Human played a " + playedCard.cardType + " " + playedCard.value + " and guessed " + humanGuess);
+        }
+        else
+        {
+            Debug.Log("NPC played a " + playedCard.cardType + " "+ playedCard.value + " and guessed " + npcHand.guess);
+        }
         
         isCardPlayed = true;
     }
@@ -65,8 +96,8 @@ public class CardPlay : Phase
     void CompareExpectedAgainstInput()
     {
         // calculate expected value
-        int valExpected = battleManager.currentNumber + battleManager.playedHumanCard.value;
-        int valInput = guessHandler.submittedGuess;
+        int valExpected = battleManager.currentNumber + playedHumanCard.value;
+        int valInput = humanGuess;
 
         // update NPC player
         npcHand.EvaluatePlayerMove(valExpected, valInput);

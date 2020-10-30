@@ -5,8 +5,9 @@ using UnityEngine;
 // This is a representation of the comnputer opponent's behaviour
 public class NPCHand : Hand
 {
-    public event Action onCardPlayed;
+    public event Action<Card> onCardPlayed;
     public EnemyBattleData data;
+    public int guess;
     bool playerGuessCorrect;
     int targetNumber;
     int currentNumber;
@@ -33,7 +34,7 @@ public class NPCHand : Hand
     {
         //TODO challenging functionality
         if (playerGuessCorrect)
-            print("Player guesssed correctly. NPC will pass the challenge.");
+            print("Player guessed correctly. NPC will pass the challenge.");
         else
             print("Player guess is incorrect. NPC will challenge.");
     }
@@ -44,9 +45,22 @@ public class NPCHand : Hand
         {
             case EnemyBattleStyles.Normal:
                 PlayCard(FindBestCard());
-                onCardPlayed?.Invoke();
                 break;
         }
+    }
+
+    public override void PlayCard(Card card)
+    {
+        base.PlayCard(card);
+        GuessValue(card);
+        onCardPlayed?.Invoke(card);
+    }
+
+    void GuessValue(Card card)
+    {
+        // currently NPC always makes a correct guess
+        //TODO make the NPC make some wrong guesses on random basis
+        guess = currentNumber + card.value;
     }
 
     Card FindBestCard()

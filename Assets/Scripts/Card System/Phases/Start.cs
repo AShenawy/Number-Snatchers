@@ -60,8 +60,6 @@ public class Start : Phase
         currentNumberDisplay.text = "";
         counter = Time.timeSinceLevelLoad;
 
-        battleManager.guessHandler.gameObject.SetActive(false);
-
         base.Enter();
     }
 
