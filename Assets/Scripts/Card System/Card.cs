@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
@@ -12,11 +13,11 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public Sprite face;
     public Sprite sleeve;
 
-    RectTransform rt;
+    RectTransform artTransform;
 
     private void Start()
     {
-        rt = GetComponent<RectTransform>();
+        artTransform = GetComponentInChildren<Image>().GetComponent<RectTransform>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -26,12 +27,12 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        rt.anchoredPosition += new Vector2(0, peekUpDistance);
+        artTransform.anchoredPosition += new Vector2(0, peekUpDistance);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        rt.anchoredPosition -= new Vector2(0, peekUpDistance);
+        artTransform.anchoredPosition -= new Vector2(0, peekUpDistance);
     }
 
     public void PlayCard()

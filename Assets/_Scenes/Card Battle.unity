@@ -881,7 +881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 1
   battlePhase: 0
-  playerTurn: 1
+  playerTurn: 0
   roundNumberDisplay: {fileID: 541896829}
   targetNumberDisplay: {fileID: 2062165065}
   currentNumberDisplay: {fileID: 1518391645}
