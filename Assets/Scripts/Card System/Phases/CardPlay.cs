@@ -74,7 +74,9 @@ public class CardPlay : Phase
 
     void StoreHumanGuess(int guess)
     {
+        // make a local store for npc evaluation
         humanGuess = guess;
+        // save the guess in the player hand for later use
         playerHand.guess = guess;
         OnCardPlayed(playedHumanCard);
     }
