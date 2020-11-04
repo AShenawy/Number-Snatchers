@@ -9,6 +9,7 @@ public class CheckGuess : Phase
     bool isCurrentPlayerChallenged;
     bool isGuessCorrect;
     bool isChallengeCorrect;
+    int trueSum;
 
     public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isChallenged)
        : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -23,6 +24,7 @@ public class CheckGuess : Phase
 
         // check that current player guess is correct
         CheckGuessedSum();
+        CheckChallengerGuess();
 
         base.Enter();
     }
@@ -43,36 +45,67 @@ public class CheckGuess : Phase
 
     void CheckGuessedSum()
     {
-        // calculate the correct sum of values based on latest current number and the last played card
-        int trueSum;
-
         if (battleManager.playerTurn == CurrentPlayer.Human)
         {
+            // calculate the correct sum of values based on latest current number and the last played card
             trueSum = battleManager.currentNumber + playerHand.lastPlayedCard.value;
 
             // check sum against guess
             if (trueSum == playerHand.guess)
             {
+                Debug.Log("<color=green>Human guessed correctly.</color>");
                 isGuessCorrect = true;
-                Debug.Log("<color=green>" + battleManager.playerTurn + " guessed correctly.</color>");
                 return;
             }
         }
-        // same for NPC
-        else
+        else   // same for NPC
         {
             trueSum = battleManager.currentNumber + npcHand.lastPlayedCard.value;
-            
             if (trueSum == npcHand.guess)
             {
+                Debug.Log("<color=green>NPC guessed correctly.</color>");
                 isGuessCorrect = true;
-                Debug.Log("<color=green>" + battleManager.playerTurn + " guessed correctly.</color>");
                 return;
             }
         }
 
-        isGuessCorrect = false;
+        // if neither guesses were correct and the method didn't return already then guess is wrong
         Debug.Log("<color=red>" + battleManager.playerTurn + " did not guess correctly.</color>");
+        isGuessCorrect = false;
+    }
+
+    void CheckChallengerGuess()
+    {
+        if (!isCurrentPlayerChallenged)
+        {
+            Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess wasn't challenged by opponent.</color>");
+            return;
+        }
+
+        // check the correctness of the challenger (opposite player)
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+        {
+            if (trueSum == npcHand.guess)
+            {
+                Debug.Log("<color=green>NPC guessed correctly.</color>");
+                isChallengeCorrect = true;
+                return;
+            }
+        }
+        // if it's NPC turn then check the player guess for the challenge
+        else
+        {
+            if (trueSum == playerHand.guess)
+            {
+                Debug.Log("<color=green>Human guessed correctly.</color>");
+                isChallengeCorrect = true;
+                return;
+            }
+        }
+
+        // if neither guesses were correct and the method didn't return already then guess is wrong
+        Debug.Log("<color=red>The opponent did not guess correctly.</color>");
+        isChallengeCorrect = false;
     }
 
     public void TakeDamagePlayer(int value)

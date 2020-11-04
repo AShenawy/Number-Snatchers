@@ -38,7 +38,6 @@ public class NPCHand : Hand
 
     public void ChallengePlayer()
     {
-        //TODO challenging functionality
         if (playerGuessCorrect)
         {
             print("<color=yellow>Player guessed correctly. NPC will pass the challenge.</color>");
