@@ -19,8 +19,7 @@ public class NewRound : Phase
 
         UpdateRoundCounter();
         GenerateTargetNumber();
-
-        battleManager.currentNumberDisplay.text = "00";
+        ResetCurrentNumber();
         counter = Time.timeSinceLevelLoad;
         base.Enter();
     }
@@ -46,6 +45,12 @@ public class NewRound : Phase
         battleManager.targetNumber = newTarget;
         battleManager.targetNumberDisplay.text = newTarget.ToString();
         npcHand.UpdateTargetNumber(newTarget);
+    }
+
+    void ResetCurrentNumber()
+    {
+        battleManager.currentNumber = 0;
+        battleManager.currentNumberDisplay.text = "00";
     }
 
     void DelayedExit()

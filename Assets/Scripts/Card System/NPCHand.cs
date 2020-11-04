@@ -73,7 +73,7 @@ public class NPCHand : Hand
         // currently NPC always makes a correct guess
         
         // set a 10% chance where the NPC might guess wrong
-        if (Random.Range(0, 10) < 1)
+        if (Random.Range(0, 10) < 5)
         {
             // NPC will make an error in the summation between -2 and 2
             // However there's 20% chance the error is 0 meaning no mistake

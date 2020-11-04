@@ -10,6 +10,7 @@ public class CheckGuess : Phase
     bool isGuessCorrect;
     bool isChallengeCorrect;
     int trueSum;
+    bool isCheckComplete;
 
     public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isChallenged)
        : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -22,9 +23,7 @@ public class CheckGuess : Phase
     {
         Debug.Log("Entering Guess Check phase.");
 
-        // check that current player guess is correct
-        CheckGuessedSum();
-        CheckChallengerGuess();
+        EvaluateTurn();
 
         base.Enter();
     }
@@ -33,14 +32,77 @@ public class CheckGuess : Phase
     {
         //TODO check the guess, challenge, and correct value
 
-        nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand);
-        stage = Stages.Exit;
+        if (isCheckComplete)
+        {
+            nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
+        }
     }
 
     public override void Exit()
     {
         Debug.Log("Exiting Guess Check phase.");
+
+        // reset values
+        isCheckComplete = false;
+        isGuessCorrect = false;
+        isChallengeCorrect = false;
+        isCurrentPlayerChallenged = false;
+        trueSum = 0;
+
         base.Exit();
+    }
+
+    void EvaluateTurn()
+    {
+        CheckGuessedSum();
+
+        // if current player made a wrong guess and was challenged then check challenger's guess
+        if (!isGuessCorrect && isCurrentPlayerChallenged)
+        {
+            CheckChallengerGuess();
+            if (isChallengeCorrect)
+            {
+                // if challenger guess is right then player will take damage and round is finished
+                Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and receives " + trueSum + " damage. Opponents' guess is correct. Opponent wins the pot</color>");
+                UpdateCurrentNumber(trueSum);
+                ApplyDamage(battleManager.playerTurn, trueSum);
+                isCheckComplete = true;
+                return;
+                //TODO inform that round is ended
+            }
+            else
+            {
+                // if both sides are wrong then both receive damage and round continues
+                Debug.Log("<color=yellow>Both sides made wrong guess and receive " + trueSum + " damage.</color>");
+                UpdateCurrentNumber(trueSum);
+                ApplyDamageBoth(trueSum);
+                isCheckComplete = true;
+                return;
+            }
+        }
+        // if current player made a wrong guess and wasn't challenged then both receive damage
+        else if (!isGuessCorrect && !isCurrentPlayerChallenged)
+        {
+            Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and opponent didn't challenge. Both receive " + trueSum + " damage.</color>");
+            UpdateCurrentNumber(trueSum);
+            ApplyDamageBoth(trueSum);
+            isCheckComplete = true;
+            return;
+        }
+
+        // if above is passed then player made a correct guess
+        Debug.Log("<color=yellow>Proceeding with player's correct guess.</color>");
+        UpdateCurrentNumber(trueSum);
+
+        // if reached the target then opposite side receives damage and round is ended
+        if (battleManager.currentNumber == battleManager.targetNumber)
+        {
+            Debug.Log("<color=yellow>Target reached. Opponent receives full " + trueSum + " damage.</color>");
+            ApplyDamageOpponent(trueSum);
+        }
+
+        isCheckComplete = true;
     }
 
     void CheckGuessedSum()
@@ -108,21 +170,45 @@ public class CheckGuess : Phase
         isChallengeCorrect = false;
     }
 
-    public void TakeDamagePlayer(int value)
+    void UpdateCurrentNumber(int value)
     {
-        currentHpPlayer -= value;
-        if (currentHpPlayer < 0)
-            currentHpPlayer = 0;
-        battleManager.playerCurrentHP = currentHpPlayer;
-        battleManager.playerHPDisplay.fillAmount = currentHpPlayer / startingHpPlayer;
+        battleManager.currentNumber = value;
+        battleManager.currentNumberDisplay.text = value.ToString();
     }
 
-    public void TakeDamageEnemy(int value)
+    void ApplyDamageBoth(int amount)
     {
-        currentHpNPC -= value;
-        if (currentHpNPC < 0)
-            currentHpNPC = 0;
-        battleManager.npcCurrentHP = currentHpNPC;
-        battleManager.nPCHPDisplay.fillAmount = currentHpNPC / startingHpNPC;
+        ApplyDamage(CurrentPlayer.Human, amount);
+        ApplyDamage(CurrentPlayer.NPC, amount);
+    }
+
+    void ApplyDamageOpponent(int amount)
+    {
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+            ApplyDamage(CurrentPlayer.NPC, amount);
+        else
+            ApplyDamage(CurrentPlayer.Human, amount);
+    }
+
+    void ApplyDamage(CurrentPlayer side, int amount)
+    {
+        switch (side)
+        {
+            case CurrentPlayer.Human:
+                currentHpPlayer -= amount;
+                if (currentHpPlayer < 0)
+                    currentHpPlayer = 0;
+                battleManager.playerCurrentHP = currentHpPlayer;
+                battleManager.playerHPDisplay.fillAmount = (float)currentHpPlayer / startingHpPlayer;
+                break;
+
+            case CurrentPlayer.NPC:
+                currentHpNPC -= amount;
+                if (currentHpNPC < 0)
+                    currentHpNPC = 0;
+                battleManager.npcCurrentHP = currentHpNPC;
+                battleManager.nPCHPDisplay.fillAmount = (float)currentHpNPC / startingHpNPC;
+                break;
+        }
     }
 }
