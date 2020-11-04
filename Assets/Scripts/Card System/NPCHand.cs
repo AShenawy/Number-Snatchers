@@ -41,12 +41,12 @@ public class NPCHand : Hand
         //TODO challenging functionality
         if (playerGuessCorrect)
         {
-            print("Player guessed correctly. NPC will pass the challenge.");
+            print("<color=yellow>Player guessed correctly. NPC will pass the challenge.</color>");
             onChallengePassed?.Invoke();
         }
         else
         {
-            print("Player guess is incorrect. NPC will challenge.");
+            print("<color=yellow>Player guess is incorrect. NPC will challenge.</color>");
             onChallengeAccepted?.Invoke();
         }
     }
