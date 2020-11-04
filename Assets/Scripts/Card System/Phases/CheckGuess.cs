@@ -7,6 +7,8 @@ using System.Collections;
 public class CheckGuess : Phase
 {
     bool isCurrentPlayerChallenged;
+    bool isGuessCorrect;
+    bool isChallengeCorrect;
 
     public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isChallenged)
        : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -18,6 +20,10 @@ public class CheckGuess : Phase
     public override void Enter()
     {
         Debug.Log("Entering Guess Check phase.");
+
+        // check that current player guess is correct
+        CheckGuessedSum();
+
         base.Enter();
     }
 
@@ -33,6 +39,40 @@ public class CheckGuess : Phase
     {
         Debug.Log("Exiting Guess Check phase.");
         base.Exit();
+    }
+
+    void CheckGuessedSum()
+    {
+        // calculate the correct sum of values based on latest current number and the last played card
+        int trueSum;
+
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+        {
+            trueSum = battleManager.currentNumber + playerHand.lastPlayedCard.value;
+
+            // check sum against guess
+            if (trueSum == playerHand.guess)
+            {
+                isGuessCorrect = true;
+                Debug.Log("<color=green>" + battleManager.playerTurn + " guessed correctly.</color>");
+                return;
+            }
+        }
+        // same for NPC
+        else
+        {
+            trueSum = battleManager.currentNumber + npcHand.lastPlayedCard.value;
+            
+            if (trueSum == npcHand.guess)
+            {
+                isGuessCorrect = true;
+                Debug.Log("<color=green>" + battleManager.playerTurn + " guessed correctly.</color>");
+                return;
+            }
+        }
+
+        isGuessCorrect = false;
+        Debug.Log("<color=red>" + battleManager.playerTurn + " did not guess correctly.</color>");
     }
 
     public void TakeDamagePlayer(int value)
