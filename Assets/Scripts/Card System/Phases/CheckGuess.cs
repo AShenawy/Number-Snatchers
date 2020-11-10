@@ -9,6 +9,7 @@ public class CheckGuess : Phase
     bool isCurrentPlayerChallenged;
     bool isGuessCorrect;
     bool isChallengeCorrect;
+    bool isChallengeWon;
     int trueSum;
     bool isCheckComplete;
 
@@ -30,11 +31,9 @@ public class CheckGuess : Phase
 
     public override void Update()
     {
-        //TODO check the guess, challenge, and correct value
-
         if (isCheckComplete)
         {
-            nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand);
+            nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
             stage = Stages.Exit;
         }
     }
@@ -48,6 +47,7 @@ public class CheckGuess : Phase
         isGuessCorrect = false;
         isChallengeCorrect = false;
         isCurrentPlayerChallenged = false;
+        isChallengeWon = false;
         trueSum = 0;
 
         base.Exit();
@@ -67,9 +67,9 @@ public class CheckGuess : Phase
                 Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and receives " + trueSum + " damage. Opponents' guess is correct. Opponent wins the pot</color>");
                 UpdateCurrentNumber(trueSum);
                 ApplyDamage(battleManager.playerTurn, trueSum);
+                isChallengeWon = true;      // inform next phase that challenge is won and can skip to a new round
                 isCheckComplete = true;
                 return;
-                //TODO inform that round is ended
             }
             else
             {

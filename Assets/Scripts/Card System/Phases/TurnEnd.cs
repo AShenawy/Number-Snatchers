@@ -4,19 +4,43 @@
 // this is the last phase in each loop and determines whether a new loop begins or the battle ends
 public class TurnEnd : Phase
 {
-    public TurnEnd(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
+    bool isChallengeWon;
+
+    public TurnEnd(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isWon)
         : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.EndTurn;
+        isChallengeWon = _isWon;
     }
 
     public override void Enter()
     {
         Debug.Log("Entering Turn End phase.");
+        CheckTurnStatus();
         base.Enter();
     }
 
     public override void Update()
+    {
+           
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Exiting Turn End phase");
+        ClearTurnInfo();
+        base.Exit();
+    }
+
+    void ClearTurnInfo()
+    {
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+            playerHand.ClearTurnInfo();
+        else
+            npcHand.ClearTurnInfo();
+    }
+
+    void CheckTurnStatus()
     {
         // if a side lost the battle then end it
         if (currentHpNPC <= 0 || currentHpPlayer <= 0)
@@ -38,23 +62,8 @@ public class TurnEnd : Phase
         {
             Debug.Log(battleManager.playerTurn + " player's turn has ended. Switching sides.");
             battleManager.SwitchTurn();
-            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);;
+            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand); ;
             stage = Stages.Exit;
-        }    
-    }
-
-    public override void Exit()
-    {
-        Debug.Log("Exiting Turn End phase");
-        ClearTurnInfo();
-        base.Exit();
-    }
-
-    void ClearTurnInfo()
-    {
-        if (battleManager.playerTurn == CurrentPlayer.Human)
-            playerHand.ClearTurnInfo();
-        else
-            npcHand.ClearTurnInfo();
+        }
     }
 }
