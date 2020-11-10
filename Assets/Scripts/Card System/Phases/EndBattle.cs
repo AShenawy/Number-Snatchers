@@ -60,18 +60,18 @@ public class EndBattle : Phase
         }
         else if (win == 1)
         {
-            Debug.Log("<color=magenta>Human player won the battle!");
+            Debug.Log("<color=magenta>Human player won the battle!</color>");
             //TODO Display human win screen
         }
         else if (win == 2)
         {
-            Debug.Log("<color=magenta>Computer player won the battle!");
+            Debug.Log("<color=magenta>Computer player won the battle!</color>");
             //TODO Display NPC win screen
         }
         else
         {
             // this is an error case and should never occur
-            Debug.Log("<color=red>Game Error: No winner could be determined!");
+            Debug.Log("<color=red>Game Error: No winner could be determined!</color>");
         }
     }
 
