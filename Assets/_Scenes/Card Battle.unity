@@ -894,6 +894,9 @@ MonoBehaviour:
   guessHandlerCardPrefab: {fileID: 8060051020572713999, guid: a8a14def5cbd5024d9640b548f4b9d52, type: 3}
   humanChallengerCardPrefab: {fileID: 6852543144266586828, guid: b60e04d2ed3777d4f86f8ceebbb5a414, type: 3}
   turnSwitchCardPrefab: {fileID: 773670270360090036, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+  gameWonCardPrefab: {fileID: 2949183960437569903, guid: 91f5f38197beaaa46a7e0e10a28bcd60, type: 3}
+  gameLostCardPrefab: {fileID: 2349447690513898981, guid: e34b6efd95105c44a86052f1cd4539bf, type: 3}
+  gameDrawCardPrefab: {fileID: 5612541197049645981, guid: 664f24403d325aa4a83eb20710132c45, type: 3}
   playerHand: {fileID: 1398298046}
   playerStats:
     hP: 100

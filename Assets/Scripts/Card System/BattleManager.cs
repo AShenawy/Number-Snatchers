@@ -33,6 +33,9 @@ public class BattleManager : MonoBehaviour
     public GuessHandler guessHandlerCardPrefab;
     public ChallengeHandler humanChallengerCardPrefab;
     public GameObject turnSwitchCardPrefab;
+    public GameEndHandler gameWonCardPrefab;
+    public GameEndHandler gameLostCardPrefab;
+    public GameEndHandler gameDrawCardPrefab;
 
     [Header("Player Parameters")]
     public PlayerHand playerHand;

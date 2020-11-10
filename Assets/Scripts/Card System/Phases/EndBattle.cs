@@ -6,6 +6,7 @@ using System.Collections;
 public class EndBattle : Phase
 {
     bool isReplaying;
+    GameEndHandler endHandler;
 
     public EndBattle(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
         : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -33,7 +34,7 @@ public class EndBattle : Phase
     {
         Debug.Log("Exiting Battle End Phase.");
 
-        //TODO unsub from all events
+        endHandler.onButtonClicked -= OnReplay;
 
         base.Exit();
     }
@@ -56,17 +57,20 @@ public class EndBattle : Phase
         if (win == 0)
         {
             Debug.Log("<color=magenta>Both sides lost. It's a draw!</color>");
-            //TODO Display draw screen
+            endHandler = Object.Instantiate(battleManager.gameDrawCardPrefab, battleManager.transform);
+            endHandler.onButtonClicked += OnReplay;
         }
         else if (win == 1)
         {
             Debug.Log("<color=magenta>Human player won the battle!</color>");
-            //TODO Display human win screen
+            endHandler = Object.Instantiate(battleManager.gameWonCardPrefab, battleManager.transform);
+            endHandler.onButtonClicked += OnReplay;
         }
         else if (win == 2)
         {
             Debug.Log("<color=magenta>Computer player won the battle!</color>");
-            //TODO Display NPC win screen
+            endHandler = Object.Instantiate(battleManager.gameLostCardPrefab, battleManager.transform);
+            endHandler.onButtonClicked += OnReplay;
         }
         else
         {
@@ -78,5 +82,6 @@ public class EndBattle : Phase
     void OnReplay()
     {
         isReplaying = true;
+        battleManager.currentRound = 0;
     }
 }
