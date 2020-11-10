@@ -16,31 +16,10 @@ public class TurnEnd : Phase
     public override void Enter()
     {
         Debug.Log("Entering Turn End phase.");
-        CheckTurnStatus();
         base.Enter();
     }
 
     public override void Update()
-    {
-           
-    }
-
-    public override void Exit()
-    {
-        Debug.Log("Exiting Turn End phase");
-        ClearTurnInfo();
-        base.Exit();
-    }
-
-    void ClearTurnInfo()
-    {
-        if (battleManager.playerTurn == CurrentPlayer.Human)
-            playerHand.ClearTurnInfo();
-        else
-            npcHand.ClearTurnInfo();
-    }
-
-    void CheckTurnStatus()
     {
         // if a side lost the battle then end it
         if (currentHpNPC <= 0 || currentHpPlayer <= 0)
@@ -57,6 +36,14 @@ public class TurnEnd : Phase
             nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
         }
+        // if challenge is won, even if target isn't reached yet then start a new round
+        else if (isChallengeWon)
+        {
+            Debug.Log("Challenge is won by opponent. Starting a new round.");
+            battleManager.SwitchTurn();
+            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
+        }
         // if neither of the above then continue the same round and switch turns
         else
         {
@@ -65,5 +52,20 @@ public class TurnEnd : Phase
             nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand); ;
             stage = Stages.Exit;
         }
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Exiting Turn End phase");
+        ClearTurnInfo();
+        base.Exit();
+    }
+
+    void ClearTurnInfo()
+    {
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+            playerHand.ClearTurnInfo();
+        else
+            npcHand.ClearTurnInfo();
     }
 }
