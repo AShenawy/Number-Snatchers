@@ -43,7 +43,10 @@ public class CardPlay : Phase
     public override void Update()
     {
         if (isCardPlayed && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
-            DelayedExit();
+        {
+            nextPhase = new Challenge(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
+        }
     }
 
     public override void Exit()
@@ -105,11 +108,5 @@ public class CardPlay : Phase
 
         // update NPC player
         npcHand.EvaluatePlayerMove(valExpected, valInput);
-    }
-
-    void DelayedExit()
-    {
-        nextPhase = new Challenge(battleManager, playerStats, npcData, playerHand, npcHand);
-        stage = Stages.Exit;
     }
 }

@@ -41,7 +41,10 @@ public class Challenge : Phase
     public override void Update()
     {
         if (isChallengeComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
-            DelayedExit();
+        {
+            nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand, isCurrentPlayerChallenged);
+            stage = Stages.Exit;
+        }
     }
 
     public override void Exit()
@@ -108,11 +111,5 @@ public class Challenge : Phase
     {
         isCurrentPlayerChallenged = false;
         isChallengeComplete = true;
-    }
-
-    void DelayedExit()
-    {
-        nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand, isCurrentPlayerChallenged);
-        stage = Stages.Exit;
     }
 }

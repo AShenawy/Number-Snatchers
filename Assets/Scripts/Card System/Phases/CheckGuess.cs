@@ -36,7 +36,10 @@ public class CheckGuess : Phase
     public override void Update()
     {
         if (isCheckComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
-            DelayedExit();
+        {
+            nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
+            stage = Stages.Exit;
+        }
     }
 
     public override void Exit()
@@ -211,11 +214,5 @@ public class CheckGuess : Phase
                 battleManager.nPCHPDisplay.fillAmount = (float)currentHpNPC / startingHpNPC;
                 break;
         }
-    }
-
-    void DelayedExit()
-    {
-        nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
-        stage = Stages.Exit;
     }
 }

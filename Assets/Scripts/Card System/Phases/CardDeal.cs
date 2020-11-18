@@ -44,7 +44,10 @@ public class CardDeal : Phase
     {
         // move to next phase when players have been dealt cards
         if (dealEnded && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
-            DelayedExit();
+        {
+            nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
+        }
     }   
 
     public override void Exit()
@@ -59,11 +62,5 @@ public class CardDeal : Phase
     void OnCardDealEnded()
     {
         dealEnded = true;
-    }
-
-    void DelayedExit()
-    {
-        nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHand, npcHand);
-        stage = Stages.Exit;
     }
 }

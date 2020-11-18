@@ -29,27 +29,33 @@ public class TurnEnd : Phase
             Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log("A side has reached 0 HP. Game is over");
-            DelayedExit(new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand));
+            nextPhase = new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit; 
         }
         // if the target is reached or crossed then start a new round
         else if (battleManager.currentNumber >= battleManager.targetNumber && Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log("Target number is reached. Starting a new round.");
-            DelayedExit(new NewRound(battleManager, playerStats, npcData, playerHand, npcHand));
-
+            battleManager.SwitchTurn();
+            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
             //TODO if current number went over then it should go to the pot
         }
         // if challenge is won, even if target isn't reached yet then start a new round
         else if (isChallengeWon && Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log("Challenge is won by opponent. Starting a new round.");
-            DelayedExit(new NewRound(battleManager, playerStats, npcData, playerHand, npcHand));
+            battleManager.SwitchTurn();
+            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
         }
         // if neither of the above then continue the same round and switch turns
         else if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log(battleManager.playerTurn + " player's turn has ended. Switching sides.");
-            DelayedExit(new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand));
+            battleManager.SwitchTurn();
+            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
         }
     }
 
@@ -66,12 +72,5 @@ public class TurnEnd : Phase
             playerHand.ClearTurnInfo();
         else
             npcHand.ClearTurnInfo();
-    }
-
-    void DelayedExit(Phase phase)
-    {
-        battleManager.SwitchTurn();
-        nextPhase = phase;
-        stage = Stages.Exit;
     }
 }

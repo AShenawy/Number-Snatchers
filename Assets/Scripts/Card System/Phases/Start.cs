@@ -67,19 +67,21 @@ public class Start : Phase
     {
         // nothing happens during this phase besides initialisation. Move on to next phase after time passes
         if (Time.timeSinceLevelLoad - counter >= exitTimer)
-            DelayedExit();
+        {
+            nextPhase = new NewRound(battleManager, playerStats, npcData, base.playerHand, npcHand);
+            stage = Stages.Exit;
+        }
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Exiting Start phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
+        base.Exit();
     }
 
     void DealBothPlayers()
     {
         battleManager.StartCoroutine(battleManager.DealCards(playerHand));
         battleManager.StartCoroutine(battleManager.DealCards(npcHand));
-    }
-
-    void DelayedExit()
-    {
-        Debug.Log("Exiting Start phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
-        nextPhase = new NewRound(battleManager, playerStats, npcData, base.playerHand, npcHand);
-        stage = Stages.Exit;
     }
 }

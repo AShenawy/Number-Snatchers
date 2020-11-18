@@ -28,7 +28,16 @@ public class NewRound : Phase
     {
         // nothing happens during this phase besides generating new values. Move on to next phase
         if (Time.timeSinceLevelLoad - counter >= exitTimer)
-            DelayedExit();
+        {
+            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
+            stage = Stages.Exit;
+        }
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Exiting New Round phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
+        base.Exit();
     }
 
     void UpdateRoundCounter()
@@ -51,12 +60,5 @@ public class NewRound : Phase
     {
         battleManager.currentNumber = 0;
         battleManager.currentNumberDisplay.text = "00";
-    }
-
-    void DelayedExit()
-    {
-        Debug.Log("Exiting New Round phase after " + (Time.timeSinceLevelLoad - counter) + " seconds.");
-        nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
-        stage = Stages.Exit;
     }
 }
