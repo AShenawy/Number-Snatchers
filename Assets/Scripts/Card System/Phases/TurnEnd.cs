@@ -25,34 +25,31 @@ public class TurnEnd : Phase
     public override void Update()
     {
         // if a side lost the battle then end it
-        if (currentHpNPC <= 0 || currentHpPlayer <= 0)
+        if ((currentHpNPC <= 0 || currentHpPlayer <= 0) &&
+            Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log("A side has reached 0 HP. Game is over");
-            if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
-                DelayedExit(new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand));
+            DelayedExit(new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand));
         }
         // if the target is reached or crossed then start a new round
-        else if (battleManager.currentNumber >= battleManager.targetNumber)
+        else if (battleManager.currentNumber >= battleManager.targetNumber && Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log("Target number is reached. Starting a new round.");
-            if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
-                DelayedExit(new NewRound(battleManager, playerStats, npcData, playerHand, npcHand));
+            DelayedExit(new NewRound(battleManager, playerStats, npcData, playerHand, npcHand));
 
             //TODO if current number went over then it should go to the pot
         }
         // if challenge is won, even if target isn't reached yet then start a new round
-        else if (isChallengeWon)
+        else if (isChallengeWon && Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log("Challenge is won by opponent. Starting a new round.");
-            if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
-                DelayedExit(new NewRound(battleManager, playerStats, npcData, playerHand, npcHand));
+            DelayedExit(new NewRound(battleManager, playerStats, npcData, playerHand, npcHand));
         }
         // if neither of the above then continue the same round and switch turns
-        else
+        else if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log(battleManager.playerTurn + " player's turn has ended. Switching sides.");
-            if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
-                DelayedExit(nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand));
+            DelayedExit(new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand));
         }
     }
 
