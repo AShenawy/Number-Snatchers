@@ -7,6 +7,9 @@ public class EndBattle : Phase
 {
     bool isReplaying;
     GameEndHandler endHandler;
+    float countdown;    // time to countdown from
+    float timeExit = 2f; // time to exit the phase
+
 
     public EndBattle(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
         : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -23,16 +26,13 @@ public class EndBattle : Phase
 
     public override void Update()
     {
-        if (isReplaying)
-        {
-            nextPhase = new Start(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit;
-        }
+        if (isReplaying && (Time.timeSinceLevelLoad - countdown >= timeExit))
+            DelayedExit();
     }
 
     public override void Exit()
     {
-        Debug.Log("Exiting Battle End Phase.");
+        Debug.Log("Exiting Battle End Phase. Phase time is " + (Time.timeSinceLevelLoad - countdown) + " seconds.");
 
         endHandler.onButtonClicked -= OnReplay;
 
@@ -83,5 +83,12 @@ public class EndBattle : Phase
     {
         isReplaying = true;
         battleManager.currentRound = 0;
+        countdown = Time.timeSinceLevelLoad;
+    }
+
+    void DelayedExit()
+    {
+        nextPhase = new Start(battleManager, playerStats, npcData, playerHand, npcHand);
+        stage = Stages.Exit;
     }
 }

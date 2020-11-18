@@ -6,6 +6,9 @@ public class Challenge : Phase
     ChallengeHandler humanChallengerHandler;
     bool isCurrentPlayerChallenged;
     bool isChallengeComplete;
+    float timeEnter;    // time to countdown from
+    float timeExit = 2f;    // time to exit the phase
+
 
     public Challenge(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
         : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -23,7 +26,7 @@ public class Challenge : Phase
         // if it's NPC turn then human gets to challenge and vice versa
         if (battleManager.playerTurn == CurrentPlayer.NPC)
         {
-            humanChallengerHandler = GameObject.Instantiate(battleManager.humanChallengerCardPrefab, battleManager.transform);
+            humanChallengerHandler = Object.Instantiate(battleManager.humanChallengerCardPrefab, battleManager.transform);
             PopulateChallengeDetails();
             humanChallengerHandler.onChallengeSubmitted += StoreNPCChallenge;
             humanChallengerHandler.onChallengePassed += PassChallengingNPC;
@@ -31,21 +34,19 @@ public class Challenge : Phase
         else
             npcHand.ChallengePlayer();
 
+        timeEnter = Time.timeSinceLevelLoad;
         base.Enter();
     }
 
     public override void Update()
     {
-        if (isChallengeComplete)
-        {
-            nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand, isCurrentPlayerChallenged);
-            stage = Stages.Exit;
-        }
+        if (isChallengeComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+            DelayedExit();
     }
 
     public override void Exit()
     {
-        Debug.Log("Exiting Challenge phase.");
+        Debug.Log("Exiting Challenge phase. Phase time is " + (Time.timeSinceLevelLoad - timeEnter) + " seconds.");
 
         // unsub events
         if (humanChallengerHandler)
@@ -107,5 +108,11 @@ public class Challenge : Phase
     {
         isCurrentPlayerChallenged = false;
         isChallengeComplete = true;
+    }
+
+    void DelayedExit()
+    {
+        nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand, isCurrentPlayerChallenged);
+        stage = Stages.Exit;
     }
 }

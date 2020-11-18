@@ -9,6 +9,9 @@ public class CardPlay : Phase
     bool isCardPlayed;
     Card playedHumanCard;
     int humanGuess;
+    float timeEnter;    // time to countdown from
+    float timeExit = 2f; // time to exit the phase
+
 
     public CardPlay(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
            : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -33,16 +36,14 @@ public class CardPlay : Phase
             npcHand.PlayTurn();
         }
 
+        timeEnter = Time.timeSinceLevelLoad;
         base.Enter();
     }
 
     public override void Update()
     {
-        if (isCardPlayed)
-        {
-            nextPhase = new Challenge(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit;
-        }
+        if (isCardPlayed && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+            DelayedExit();
     }
 
     public override void Exit()
@@ -56,7 +57,7 @@ public class CardPlay : Phase
             guessHandler.onInputSubmitted -= StoreHumanGuess;
         npcHand.onCardPlayed -= OnCardPlayed;
 
-        Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " player played their card.");
+        Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " player played their card. Phase time is " + (Time.timeSinceLevelLoad - timeEnter) + " seconds.");
         base.Exit();
     }
 
@@ -68,7 +69,7 @@ public class CardPlay : Phase
 
     void DisplayGuessHandler()
     {
-        guessHandler = GameObject.Instantiate(battleManager.guessHandlerCardPrefab, battleManager.transform);
+        guessHandler = Object.Instantiate(battleManager.guessHandlerCardPrefab, battleManager.transform);
         guessHandler.onInputSubmitted += StoreHumanGuess;
     }
 
@@ -104,5 +105,11 @@ public class CardPlay : Phase
 
         // update NPC player
         npcHand.EvaluatePlayerMove(valExpected, valInput);
+    }
+
+    void DelayedExit()
+    {
+        nextPhase = new Challenge(battleManager, playerStats, npcData, playerHand, npcHand);
+        stage = Stages.Exit;
     }
 }

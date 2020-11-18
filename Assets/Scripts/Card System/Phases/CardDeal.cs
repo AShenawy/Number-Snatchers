@@ -7,8 +7,8 @@ public class CardDeal : Phase
     CurrentPlayer player;
 
     bool dealEnded;
-    //float counter;
-    //float exitTimer = 1f;
+    float timeEnter;
+    float timeExit = 2f;
 
     public CardDeal(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
            : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -36,30 +36,34 @@ public class CardDeal : Phase
                 break;
         }
 
+        timeEnter = Time.timeSinceLevelLoad;
         base.Enter();
     }
 
     public override void Update()
     {
         // move to next phase when players have been dealt cards
-        if (dealEnded)
-        {
-            nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit;
-        }
-    }
+        if (dealEnded && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+            DelayedExit();
+    }   
 
     public override void Exit()
     {
         // reset the deal ended bool and unsub to event
         dealEnded = false;
         battleManager.onDealEnded -= OnCardDealEnded;
-        Debug.Log("Exiting Deal phase after all cards are dealt to " + player +" player.");
+        Debug.Log("Exiting Deal phase after all cards are dealt to " + player +" player. Phase time is " + (Time.timeSinceLevelLoad - timeEnter) + " seconds.");
         base.Exit();
     }
 
     void OnCardDealEnded()
     {
         dealEnded = true;
+    }
+
+    void DelayedExit()
+    {
+        nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHand, npcHand);
+        stage = Stages.Exit;
     }
 }

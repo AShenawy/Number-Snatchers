@@ -12,6 +12,9 @@ public class CheckGuess : Phase
     bool isChallengeWon;
     int trueSum;
     bool isCheckComplete;
+    float timeEnter;    // time to countdown from
+    float timeExit = 2f;    // time to exit the phase
+
 
     public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isChallenged)
        : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -26,21 +29,19 @@ public class CheckGuess : Phase
 
         EvaluateTurn();
 
+        timeEnter = Time.timeSinceLevelLoad;
         base.Enter();
     }
 
     public override void Update()
     {
-        if (isCheckComplete)
-        {
-            nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
-            stage = Stages.Exit;
-        }
+        if (isCheckComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+            DelayedExit();
     }
 
     public override void Exit()
     {
-        Debug.Log("Exiting Guess Check phase.");
+        Debug.Log("Exiting Guess Check phase. Phase time is " + (Time.timeSinceLevelLoad - timeEnter) + " seconds.");
 
         // reset values
         isCheckComplete = false;
@@ -210,5 +211,11 @@ public class CheckGuess : Phase
                 battleManager.nPCHPDisplay.fillAmount = (float)currentHpNPC / startingHpNPC;
                 break;
         }
+    }
+
+    void DelayedExit()
+    {
+        nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
+        stage = Stages.Exit;
     }
 }
