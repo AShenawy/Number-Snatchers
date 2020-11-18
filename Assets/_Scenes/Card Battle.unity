@@ -901,7 +901,7 @@ MonoBehaviour:
   playerStats:
     hP: 100
   nPCHand: {fileID: 2017785967}
-  nPCData: {fileID: 11400000, guid: 84bf793f27d96b447aea4786c9bfcbaa, type: 2}
+  nPCData: {fileID: 11400000, guid: 0669f0a99176b3d4799a55196ca17a46, type: 2}
   targetNumber: 0
   currentNumber: 0
   currentRound: 0
