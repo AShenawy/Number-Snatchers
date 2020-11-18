@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class NewRound : Phase
 {
     float counter;
-    float exitTimer = 1f;   // how long to wait before exiting this phase
+    float exitTimer = 2f;   // how long to wait before exiting this phase
 
     public NewRound(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
             : base (_bm, _plStats, _npcData, _plrHnd, _npcHnd)
