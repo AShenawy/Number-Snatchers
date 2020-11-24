@@ -76,4 +76,28 @@ public class Dealer : MonoBehaviour
             deckCards.RemoveAt(random);
         }
     }
+
+    public void PlaceInGraveyard(Card card)
+    {
+        switch (card.cardType)
+        {
+            case CardType.Add:
+                graveyard.Add(additionCardsPrefabs[card.value - 1]);
+                break;
+
+            case CardType.Subtract:
+                graveyard.Add(subtractionCardsPrefabs[(card.value * -1) - 1]);
+                break;
+
+            case CardType.Wild:
+                graveyard.Add(wildCardsPrefabs[0]);
+                break;
+        }
+    }
+
+    public void RefreshDeck()
+    {
+        //TODO move cards from graveyard back into deck
+        print("Moving cards from graveyard back to deck");
+    }
 }

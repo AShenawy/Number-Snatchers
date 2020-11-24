@@ -6,10 +6,10 @@ namespace Utilities
 {
     public static class ArrayFuncs
     {
-        public static void FillArray<T>(T[] cardsArray, T value, int startIndex, int count)
+        public static void FillArray<T>(T[] array, T value, int startIndex, int count)
         {
             for (int i = startIndex; i < startIndex + count; i++)
-                cardsArray[i] = value;
+                array[i] = value;
         }
     }
 }

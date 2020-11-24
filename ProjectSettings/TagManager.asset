@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerHand
   - NPCHand
+  - Table
   layers:
   - Default
   - TransparentFX

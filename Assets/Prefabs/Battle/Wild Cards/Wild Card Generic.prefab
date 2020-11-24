@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 17d9991097f94c6468c0c8321984c614, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb9dbd37e4213c7479d62f8561e91f46, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -142,5 +142,5 @@ MonoBehaviour:
   cardType: 2
   value: 0
   peekUpDistance: 50
-  face: {fileID: 0}
+  face: {fileID: 21300000, guid: eb9dbd37e4213c7479d62f8561e91f46, type: 3}
   sleeve: {fileID: 21300000, guid: 09b7f3a44e72ee04295fbac6f3e218de, type: 3}
