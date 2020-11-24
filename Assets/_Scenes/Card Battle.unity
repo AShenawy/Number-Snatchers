@@ -978,6 +978,7 @@ MonoBehaviour:
   gameWonCardPrefab: {fileID: 2949183960437569903, guid: 91f5f38197beaaa46a7e0e10a28bcd60, type: 3}
   gameLostCardPrefab: {fileID: 2349447690513898981, guid: e34b6efd95105c44a86052f1cd4539bf, type: 3}
   gameDrawCardPrefab: {fileID: 5612541197049645981, guid: 664f24403d325aa4a83eb20710132c45, type: 3}
+  infoCardsPrefabs: []
   playerHand: {fileID: 1398298046}
   playerStats:
     hP: 100
@@ -2475,7 +2476,7 @@ GameObject:
   - component: {fileID: 1162036373}
   m_Layer: 5
   m_Name: Pot
-  m_TagString: Untagged
+  m_TagString: Pot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2517,7 +2518,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   potCards: []
   cardsTotalValue: 0
-  dealer: {fileID: 0}
+  hasCards: 0
+  dealer: {fileID: 2005228443}
 --- !u!225 &1162036374
 CanvasGroup:
   m_ObjectHideFlags: 0

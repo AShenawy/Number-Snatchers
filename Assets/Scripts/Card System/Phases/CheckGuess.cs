@@ -6,6 +6,7 @@ using System.Collections;
 // in this phase the game checks the guesses and challenges to ensure it's going forward correctly
 public class CheckGuess : Phase
 {
+    enum ChallengeCases { ChallengeCorrect, BothWrong, NoChallenge, RightGuess }
     bool isCurrentPlayerChallenged;
     bool isGuessCorrect;
     bool isChallengeCorrect;
@@ -14,6 +15,7 @@ public class CheckGuess : Phase
     bool isCheckComplete;
     float timeEnter;    // time to countdown from
     float timeExit = 2f;    // time to exit the phase
+    Pot pot;
 
 
     public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isChallenged)
@@ -21,6 +23,7 @@ public class CheckGuess : Phase
     {
         name = Phases.GuessCheck;
         isCurrentPlayerChallenged = _isChallenged;
+        pot = GameObject.FindGameObjectWithTag("Pot").GetComponent<Pot>();
     }
 
     public override void Enter()
@@ -65,12 +68,14 @@ public class CheckGuess : Phase
         if (!isGuessCorrect && isCurrentPlayerChallenged)
         {
             CheckChallengerGuess();
+
             if (isChallengeCorrect)
             {
                 // if challenger guess is right then player will take damage and round is finished
                 Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and receives " + trueSum + " damage. Opponents' guess is correct. Opponent wins the pot</color>");
                 UpdateCurrentNumber(trueSum);
-                ApplyDamage(battleManager.playerTurn, trueSum);
+                DisplayInfoCard(ChallengeCases.ChallengeCorrect);
+                ApplyDamage(battleManager.playerTurn, CalculateDamage());
                 isChallengeWon = true;      // inform next phase that challenge is won and can skip to a new round
                 isCheckComplete = true;
                 return;
@@ -80,7 +85,8 @@ public class CheckGuess : Phase
                 // if both sides are wrong then both receive damage and round continues
                 Debug.Log("<color=yellow>Both sides made wrong guess and receive " + trueSum + " damage.</color>");
                 UpdateCurrentNumber(trueSum);
-                ApplyDamageBoth(trueSum);
+                DisplayInfoCard(ChallengeCases.BothWrong);
+                ApplyDamageBoth(CalculateDamage());
                 isCheckComplete = true;
                 return;
             }
@@ -90,7 +96,8 @@ public class CheckGuess : Phase
         {
             Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and opponent didn't challenge. Both receive " + trueSum + " damage.</color>");
             UpdateCurrentNumber(trueSum);
-            ApplyDamageBoth(trueSum);
+            DisplayInfoCard(ChallengeCases.NoChallenge);
+            ApplyDamageBoth(CalculateDamage());
             isCheckComplete = true;
             return;
         }
@@ -98,15 +105,30 @@ public class CheckGuess : Phase
         // if above is passed then player made a correct guess
         Debug.Log("<color=yellow>Proceeding with player's correct guess.</color>");
         UpdateCurrentNumber(trueSum);
+        DisplayInfoCard(ChallengeCases.RightGuess);
 
         // if reached the target then opposite side receives damage and round is ended
         if (battleManager.currentNumber == battleManager.targetNumber)
         {
             Debug.Log("<color=yellow>Target reached. Opponent receives full " + trueSum + " damage.</color>");
-            ApplyDamageOpponent(trueSum);
+            ApplyDamageOpponent(CalculateDamage());
         }
 
         isCheckComplete = true;
+
+        int CalculateDamage()
+        {
+            if (pot.hasCards)
+                return trueSum + pot.cardsTotalValue;
+            else
+                return trueSum;
+        }
+    }
+
+    void DisplayInfoCard(ChallengeCases challenge)
+    {
+        //TODO Display appropriate info card based on guesses and challenges.
+        Debug.Log("<color=red>" + challenge.ToString() + "</color>");
     }
 
     void CheckGuessedSum()

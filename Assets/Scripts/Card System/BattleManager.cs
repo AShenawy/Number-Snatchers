@@ -37,6 +37,9 @@ public class BattleManager : MonoBehaviour
     public GameEndHandler gameLostCardPrefab;
     public GameEndHandler gameDrawCardPrefab;
 
+    [Header("Flash Cards")] // Prefabs to display info on screen
+    public GameObject[] infoCardsPrefabs;
+
     [Header("Player Parameters")]
     public PlayerHand playerHand;
     public Stats playerStats;

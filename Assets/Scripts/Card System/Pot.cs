@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class Pot : MonoBehaviour
 {
     public List<Card> potCards = new List<Card>();
     public int cardsTotalValue;
+    public bool hasCards;
     [SerializeField] Dealer dealer;
+    [SerializeField] Image[] cardIndicators;
 
+
+    void Start()
+    {
+        EmptyPot();
+    }
 
     public void PlaceInPot(Card card)
     {
@@ -29,13 +36,38 @@ public class Pot : MonoBehaviour
                 cardsTotalValue += Mathf.Abs(card.value);
                 break;
         }
+
+        hasCards = true;
+
+        if (potCards.Count >= 3)
+            ShowCardIndicators(3);
+        else if (potCards.Count >= 2)
+            ShowCardIndicators(2);
+        else
+            ShowCardIndicators(1);
     }
 
-    void RefreshCardsValue()
+    public void EmptyPot()
     {
-        cardsTotalValue = 0;
-
+        // move cards to graveyard and empty the pot
+        HideCardIndicators();
         foreach (Card card in potCards)
-            cardsTotalValue += card.value;
+            dealer.PlaceInGraveyard(card);
+
+        cardsTotalValue = 0;
+        potCards.Clear();
+        hasCards = false;
+    }
+
+    void ShowCardIndicators(int number)
+    {
+        for (int i = 0; i < number; i++)
+            cardIndicators[i].enabled = true;
+    }
+
+    void HideCardIndicators()
+    {
+        foreach (var image in cardIndicators)
+            image.enabled = false;
     }
 }

@@ -8,13 +8,15 @@ public class TurnEnd : Phase
     float timeEnter;    // time to countdown from
     float timeExit = 2f;    // time to exit the phase
     PlayTable table;
+    Pot pot;
 
     public TurnEnd(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isWon)
         : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.EndTurn;
         isChallengeWon = _isWon;
-        table = GameObject.FindGameObjectWithTag("Table").GetComponent<PlayTable>(); ;
+        table = GameObject.FindWithTag("Table").GetComponent<PlayTable>(); ;
+        pot = GameObject.FindWithTag("Pot").GetComponent<Pot>();
     }
 
     public override void Enter()
@@ -43,12 +45,14 @@ public class TurnEnd : Phase
             nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
         }
-        // if the target is reached crossed then start a new round and move cards to graveyard
+        // if the target is reached then start a new round and move cards to graveyard
         else if (battleManager.currentNumber == battleManager.targetNumber && Time.timeSinceLevelLoad - timeEnter >= timeExit)
         {
             Debug.Log("Target number is reached. Moving cards to Graveyard and starting a new round.");
             battleManager.SwitchTurn();
+            // empty table and pot before new round
             table.ClearTable(CardCollections.Graveyard);
+            pot.EmptyPot();
             nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
         }
@@ -57,7 +61,9 @@ public class TurnEnd : Phase
         {
             Debug.Log("Challenge is won by opponent. Moving cards to graveyard and starting a new round.");
             battleManager.SwitchTurn();
+            // empty table and pot before new round
             table.ClearTable(CardCollections.Graveyard);
+            pot.EmptyPot();
             nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
             

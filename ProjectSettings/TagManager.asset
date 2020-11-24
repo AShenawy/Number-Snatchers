@@ -7,6 +7,7 @@ TagManager:
   - PlayerHand
   - NPCHand
   - Table
+  - Pot
   layers:
   - Default
   - TransparentFX
