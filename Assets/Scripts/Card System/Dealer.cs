@@ -16,12 +16,13 @@ public class Dealer : MonoBehaviour
 
     [Header("Additional Parameters")]
     [SerializeField, Range(0, 7)] int cardsPerDeal = 5;
-    [SerializeField] Image threeCardsIndicator;
-    [SerializeField] Image twoCardsIndicator;
-    [SerializeField] Image oneCardIndicator;
+    [SerializeField] Image[] cardIndicators;
+
 
     public void FillDeck(EnemyDifficulty difficulty)
     {
+        ShowCardIndicators();
+
         switch (difficulty)
         {
             case EnemyDifficulty.Beginner:
@@ -60,6 +61,9 @@ public class Dealer : MonoBehaviour
 
     public void DealCards(Hand hand)
     {
+        if (deckCards.Count <= 0)
+            RefreshDeck();
+
         int cardsToDeal = cardsPerDeal - hand.cardsInHand.Count;
         print(hand.name + " started play with " + hand.cardsInHand.Count + " cards. Will be dealt " + cardsToDeal + " cards.");
 
@@ -75,6 +79,13 @@ public class Dealer : MonoBehaviour
             // move the card from deck
             deckCards.RemoveAt(random);
         }
+
+        if (deckCards.Count < 1)
+            HideCardIndicator(3);
+        else if (deckCards.Count < 2)
+            HideCardIndicator(2);
+        else if (deckCards.Count < 3)
+            HideCardIndicator(1);
     }
 
     public void PlaceInGraveyard(Card card)
@@ -97,7 +108,23 @@ public class Dealer : MonoBehaviour
 
     public void RefreshDeck()
     {
-        //TODO move cards from graveyard back into deck
-        print("Moving cards from graveyard back to deck");
+        print("Deck empty. Moving cards from graveyard back to deck.");
+        foreach (Card card in graveyard)
+            deckCards.Add(card);
+
+        graveyard.Clear();
+        ShowCardIndicators();
+    }
+
+    void ShowCardIndicators()
+    {
+        foreach (var image in cardIndicators)
+            image.enabled = true;
+    }
+
+    void HideCardIndicator(int number)
+    {
+        for (int i = cardIndicators.Length - 1; i >= cardIndicators.Length - number; i--)
+            cardIndicators[i].enabled = false;
     }
 }

@@ -72,7 +72,8 @@ public class CheckGuess : Phase
             if (isChallengeCorrect)
             {
                 // if challenger guess is right then player will take damage and round is finished
-                Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and receives " + trueSum + " damage. Opponents' guess is correct. Opponent wins the pot</color>");
+                Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and receives " + CalculateDamage()
+                          + " damage. Opponents' guess is correct. Opponent wins the pot</color>");
                 UpdateCurrentNumber(trueSum);
                 DisplayInfoCard(ChallengeCases.ChallengeCorrect);
                 ApplyDamage(battleManager.playerTurn, CalculateDamage());
@@ -83,7 +84,7 @@ public class CheckGuess : Phase
             else
             {
                 // if both sides are wrong then both receive damage and round continues
-                Debug.Log("<color=yellow>Both sides made wrong guess and receive " + trueSum + " damage.</color>");
+                Debug.Log("<color=yellow>Both sides made wrong guess and receive " + CalculateDamage() + " damage.</color>");
                 UpdateCurrentNumber(trueSum);
                 DisplayInfoCard(ChallengeCases.BothWrong);
                 ApplyDamageBoth(CalculateDamage());
@@ -94,7 +95,8 @@ public class CheckGuess : Phase
         // if current player made a wrong guess and wasn't challenged then both receive damage
         else if (!isGuessCorrect && !isCurrentPlayerChallenged)
         {
-            Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and opponent didn't challenge. Both receive " + trueSum + " damage.</color>");
+            Debug.Log("<color=yellow>" + battleManager.playerTurn + "'s guess is wrong and opponent didn't challenge. Both receive "
+                      + CalculateDamage() + " damage.</color>");
             UpdateCurrentNumber(trueSum);
             DisplayInfoCard(ChallengeCases.NoChallenge);
             ApplyDamageBoth(CalculateDamage());
@@ -110,7 +112,7 @@ public class CheckGuess : Phase
         // if reached the target then opposite side receives damage and round is ended
         if (battleManager.currentNumber == battleManager.targetNumber)
         {
-            Debug.Log("<color=yellow>Target reached. Opponent receives full " + trueSum + " damage.</color>");
+            Debug.Log("<color=yellow>Target reached. Opponent receives full " + CalculateDamage() + " damage.</color>");
             ApplyDamageOpponent(CalculateDamage());
         }
 
