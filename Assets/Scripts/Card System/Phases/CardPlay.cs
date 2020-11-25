@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 
 // this phase occurs after cards are dealt and it's one side's turn to play a card
 public class CardPlay : Phase
@@ -11,6 +9,8 @@ public class CardPlay : Phase
     int humanGuess;
     float timeEnter;    // time to countdown from
     float timeExit = 2f; // time to exit the phase
+    InfoCard infoCard;
+    bool canProceed;
 
 
     public CardPlay(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
@@ -20,6 +20,7 @@ public class CardPlay : Phase
 
         playerHand.humanCardPlayed += OnHumanCardPlayed;
         npcHand.onCardPlayed += OnCardPlayed;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.CardPick);
     }
 
     public override void Enter()
@@ -36,13 +37,16 @@ public class CardPlay : Phase
             npcHand.PlayTurn();
         }
 
-        timeEnter = Time.timeSinceLevelLoad;
+        //timeEnter = Time.timeSinceLevelLoad;
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.onCardDestroyed += AllowToProceed;
         base.Enter();
     }
 
     public override void Update()
     {
-        if (isCardPlayed && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+        //if (isCardPlayed && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+        if (isCardPlayed && canProceed)
         {
             nextPhase = new Challenge(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
@@ -108,5 +112,10 @@ public class CardPlay : Phase
 
         // update NPC player
         npcHand.EvaluatePlayerMove(valExpected, valInput);
+    }
+
+    void AllowToProceed()
+    {
+        canProceed = true;
     }
 }

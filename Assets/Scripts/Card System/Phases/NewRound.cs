@@ -6,11 +6,13 @@ public class NewRound : Phase
 {
     float counter;
     float exitTimer = 2f;   // how long to wait before exiting this phase
+    InfoCard infoCard;
 
     public NewRound(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
             : base (_bm, _plStats, _npcData, _plrHnd, _npcHnd)
     {
         name = Phases.NewRound;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.NewRound);
     }
 
     public override void Enter()
@@ -20,18 +22,19 @@ public class NewRound : Phase
         UpdateRoundCounter();
         GenerateTargetNumber();
         ResetCurrentNumber();
-        counter = Time.timeSinceLevelLoad;
+        //counter = Time.timeSinceLevelLoad;
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.onCardDestroyed += MoveToNextPhase;
         base.Enter();
     }
 
     public override void Update()
     {
         // nothing happens during this phase besides generating new values. Move on to next phase
-        if (Time.timeSinceLevelLoad - counter >= exitTimer)
-        {
-            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit;
-        }
+        //if (Time.timeSinceLevelLoad - counter >= exitTimer)
+        //{
+            
+        //}
     }
 
     public override void Exit()
@@ -60,5 +63,11 @@ public class NewRound : Phase
     {
         battleManager.currentNumber = 0;
         battleManager.currentNumberDisplay.text = "00";
+    }
+
+    void MoveToNextPhase()
+    {
+        nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
+        stage = Stages.Exit;
     }
 }

@@ -23,7 +23,7 @@ public class CheckGuess : Phase
     {
         name = Phases.GuessCheck;
         isCurrentPlayerChallenged = _isChallenged;
-        pot = GameObject.FindGameObjectWithTag("Pot").GetComponent<Pot>();
+        pot = battleManager.pot;
     }
 
     public override void Enter()

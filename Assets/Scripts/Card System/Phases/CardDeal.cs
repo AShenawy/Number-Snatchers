@@ -9,6 +9,8 @@ public class CardDeal : Phase
     bool dealEnded;
     float timeEnter;
     float timeExit = 2f;
+    InfoCard infoCard;
+    bool canProceed;
 
     public CardDeal(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
            : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -18,6 +20,7 @@ public class CardDeal : Phase
         player = battleManager.playerTurn;
 
         battleManager.onDealEnded += OnCardDealEnded;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.CardDeal);
     }
 
     public override void Enter()
@@ -36,14 +39,18 @@ public class CardDeal : Phase
                 break;
         }
 
-        timeEnter = Time.timeSinceLevelLoad;
+        //timeEnter = Time.timeSinceLevelLoad;
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        DisplayCardDetails(card);
+        card.onCardDestroyed += AllowToProceed;
         base.Enter();
     }
 
     public override void Update()
     {
         // move to next phase when players have been dealt cards
-        if (dealEnded && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+        //if (dealEnded && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+        if (dealEnded && canProceed)
         {
             nextPhase = new CardPlay(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
@@ -55,6 +62,7 @@ public class CardDeal : Phase
         // reset the deal ended bool and unsub to event
         dealEnded = false;
         battleManager.onDealEnded -= OnCardDealEnded;
+        canProceed = false;
         Debug.Log("Exiting Deal phase after all cards are dealt to " + player +" player. Phase time is " + (Time.timeSinceLevelLoad - timeEnter) + " seconds.");
         base.Exit();
     }
@@ -63,4 +71,18 @@ public class CardDeal : Phase
     {
         dealEnded = true;
     }
+
+    void DisplayCardDetails(InfoCard card)
+    {
+        if (battleManager.playerTurn == CurrentPlayer.Human)
+            card.descriptionText.text = ("player will be dealt").ToUpper();
+        else
+            card.descriptionText.text = ($"{npcData.enemyName} will be dealt").ToUpper();
+    }
+
+    void AllowToProceed()
+    {
+        canProceed = true;
+    }
+
 }

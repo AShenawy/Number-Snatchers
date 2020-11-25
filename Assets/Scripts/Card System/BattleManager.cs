@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +27,8 @@ public class BattleManager : MonoBehaviour
 
     [Header("Controllers")]
     public Dealer dealer;
+    public Pot pot;
+    public PlayTable table;
 
     [Header("Flow Cards")]      // Prefabs
     public GuessHandler guessHandlerCardPrefab;
@@ -38,7 +39,7 @@ public class BattleManager : MonoBehaviour
     public GameEndHandler gameDrawCardPrefab;
 
     [Header("Flash Cards")] // Prefabs to display info on screen
-    public GameObject[] infoCardsPrefabs;
+    public InfoCard[] infoCardsPrefabs;
 
     [Header("Player Parameters")]
     public PlayerHand playerHand;

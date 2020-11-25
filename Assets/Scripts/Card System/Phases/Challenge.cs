@@ -68,18 +68,18 @@ public class Challenge : Phase
         switch (npcHand.lastPlayedCard.cardType)
         {
             case CardType.Add:
-                humanChallengerHandler.challengeDetails.text = $"{npcData.enemyName} played an <color=red>Add {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=red>{npcHand.guess}</color>." +
-                    $"\nChallenge {npcData.enemyName}'s guess?";
+                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played an <color=red>Add {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=red>{npcHand.guess}</color>." +
+                    $"\nChallenge {npcData.enemyName}'s guess?").ToUpper();
                 break;
 
             case CardType.Subtract:
-                humanChallengerHandler.challengeDetails.text = $"{npcData.enemyName} played a <color=blue>Subtract {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=blue>{npcHand.guess}</color>." +
-                    $"\nChallenge {npcData.enemyName}'s guess?";
+                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played a <color=blue>Subtract {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=blue>{npcHand.guess}</color>." +
+                    $"\nChallenge {npcData.enemyName}'s guess?").ToUpper();
                 break;
 
             case CardType.Wild:
-                humanChallengerHandler.challengeDetails.text = $"{npcData.enemyName} played a <color=green>Wild {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=green>{npcHand.guess}</color>." +
-                    $"\nChallenge {npcData.enemyName}'s guess?";
+                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played a <color=green>Wild {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=green>{npcHand.guess}</color>." +
+                    $"\nChallenge {npcData.enemyName}'s guess?").ToUpper();
                 break;
         }
     }

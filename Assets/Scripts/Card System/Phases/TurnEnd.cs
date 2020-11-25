@@ -15,8 +15,8 @@ public class TurnEnd : Phase
     {
         name = Phases.EndTurn;
         isChallengeWon = _isWon;
-        table = GameObject.FindWithTag("Table").GetComponent<PlayTable>(); ;
-        pot = GameObject.FindWithTag("Pot").GetComponent<Pot>();
+        table = battleManager.table;
+        pot = battleManager.pot;
     }
 
     public override void Enter()
