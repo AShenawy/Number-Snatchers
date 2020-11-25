@@ -144,3 +144,4 @@ MonoBehaviour:
   peekUpDistance: 50
   face: {fileID: 0}
   sleeve: {fileID: 21300000, guid: ededea7cc7754c14cbf3892a8cb1dea1, type: 3}
+  cardGraphic: {fileID: 6481121752663877588}

@@ -73,6 +73,9 @@ public class Dealer : MonoBehaviour
             int random = Random.Range(0, deckCards.Count);
             Card card = Instantiate(deckCards[random]);
 
+            if (hand.GetComponent<NPCHand>())
+                card.ShowFace(false);
+
             //move the card to a hand
             hand.TakeCard(card);
 

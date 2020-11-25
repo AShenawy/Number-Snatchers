@@ -13,11 +13,13 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public Sprite face;
     public Sprite sleeve;
 
+    [SerializeField] Image cardGraphic;
     RectTransform artTransform;
 
     private void Start()
     {
         artTransform = GetComponentInChildren<Image>().GetComponent<RectTransform>();
+        
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -45,6 +47,14 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public void SetWildValue(int val)
     {
         value = Mathf.Clamp(val, -9, 9);
+    }
+
+    public void ShowFace(bool value)
+    {
+        if (!value)
+            cardGraphic.sprite = sleeve;
+        else
+            cardGraphic.sprite = face;
     }
 }
 
