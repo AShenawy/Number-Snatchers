@@ -228,6 +228,7 @@ public class CheckGuess : Phase
                     currentHpPlayer = 0;
                 battleManager.playerCurrentHP = currentHpPlayer;
                 battleManager.playerHPDisplay.fillAmount = (float)currentHpPlayer / startingHpPlayer;
+                battleManager.playerHealthCards.UpdateCards((float)currentHpPlayer / startingHpPlayer);
                 break;
 
             case CurrentPlayer.NPC:
@@ -236,6 +237,7 @@ public class CheckGuess : Phase
                     currentHpNPC = 0;
                 battleManager.npcCurrentHP = currentHpNPC;
                 battleManager.nPCHPDisplay.fillAmount = (float)currentHpNPC / startingHpNPC;
+                battleManager.npcHealthCards.UpdateCards((float)currentHpNPC / startingHpNPC);
                 break;
         }
     }

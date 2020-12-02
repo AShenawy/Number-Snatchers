@@ -36,6 +36,7 @@ public class Start : Phase
         currentHpPlayer = startingHpPlayer;
         battleManager.playerCurrentHP = currentHpPlayer;
         battleManager.playerHPDisplay.fillAmount = currentHpPlayer / startingHpPlayer;
+        battleManager.playerHealthCards.RefillCards();
         // prevent player from playing cards until CardPick phase
         playerHand.BlockCardInteractions(true);
 
@@ -46,6 +47,7 @@ public class Start : Phase
         currentHpNPC = startingHpNPC;
         battleManager.npcCurrentHP = currentHpNPC;
         battleManager.nPCHPDisplay.fillAmount = currentHpNPC / startingHpNPC;
+        battleManager.npcHealthCards.RefillCards();
 
         // set up deck
         cardDealer.FillDeck(npcData.difficulty);

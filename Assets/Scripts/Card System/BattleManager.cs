@@ -23,6 +23,8 @@ public class BattleManager : MonoBehaviour
     public Text nPCNameDisplay;
     public Image nPCHPDisplay;
     public Image playerHPDisplay;
+    public HealthCards npcHealthCards;
+    public HealthCards playerHealthCards;
     public Text currentPhaseText;
 
     [Header("Controllers")]
