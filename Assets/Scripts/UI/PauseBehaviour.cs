@@ -23,5 +23,6 @@ public sealed class PauseBehaviour : MonoBehaviour
     public void QuitGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
+        Time.timeScale = 1f;
     }
 }
