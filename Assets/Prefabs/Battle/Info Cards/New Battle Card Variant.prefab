@@ -13,27 +13,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_Text
-      value: END OF TURN!
+      value: BATTLE!
       objectReference: {fileID: 0}
     - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_FontData.m_FontSize
-      value: 74
-      objectReference: {fileID: 0}
-    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
-      propertyPath: m_FontData.m_MinSize
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_FontData.m_MaxSize
-      value: 100
+      value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_FontData.m_VerticalOverflow
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8117648
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_Color.b
+      value: 0.03137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 773670270360090036, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_Name
-      value: Turn End Card Variant
+      value: New Battle Card Variant
       objectReference: {fileID: 0}
     - target: {fileID: 773670270360090037, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_LocalPosition.x
@@ -119,17 +131,29 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 773670272085394334, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670272085394334, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648597919326308259, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81
+      objectReference: {fileID: 0}
     - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_Text
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6508444796867820976, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: cardType
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6508444796867820976, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: cardDuration
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}

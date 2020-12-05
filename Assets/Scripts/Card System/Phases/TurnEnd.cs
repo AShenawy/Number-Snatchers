@@ -9,6 +9,8 @@ public class TurnEnd : Phase
     float timeExit = 2f;    // time to exit the phase
     PlayTable table;
     Pot pot;
+    InfoCard infoCard;
+
 
     public TurnEnd(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isWon)
         : base(_bm, _plStats, _npcData, _plrHnd, _npcHnd)
@@ -17,64 +19,22 @@ public class TurnEnd : Phase
         isChallengeWon = _isWon;
         table = battleManager.table;
         pot = battleManager.pot;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.TurnEnd);
     }
 
     public override void Enter()
     {
         Debug.Log("Entering Turn End phase.");
         timeEnter = Time.timeSinceLevelLoad;
+        EvaluateTurn();
+        Object.Instantiate(infoCard, battleManager.transform);
         base.Enter();
     }
 
     public override void Update()
     {
-        // if a side lost the battle then end it
-        if ((currentHpNPC <= 0 || currentHpPlayer <= 0) &&
-            Time.timeSinceLevelLoad - timeEnter >= timeExit)
-        {
-            Debug.Log("A side has reached 0 HP. Game is over");
-            nextPhase = new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit; 
-        }
-        // if challenge is won, even if target isn't reached yet then start a new round
-        else if (isChallengeWon && Time.timeSinceLevelLoad - timeEnter >= timeExit)
-        {
-            Debug.Log("Challenge is won by opponent. Moving cards to graveyard and starting a new round.");
-            battleManager.SwitchTurn();
-            // empty table and pot before new round
-            table.ClearTable(CardCollections.Graveyard);
-            pot.EmptyPot();
-            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
+        if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
             stage = Stages.Exit;
-        }
-        // if the target is crossed then start a new round and move cards to pot
-        else if (battleManager.currentNumber > battleManager.targetNumber && Time.timeSinceLevelLoad - timeEnter >= timeExit)
-        {
-            Debug.Log("Target number is crossed. Moving cards to Pot and starting a new round.");
-            battleManager.SwitchTurn();
-            table.ClearTable(CardCollections.Pot);
-            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit;
-        }
-        // if the target is reached then start a new round and move cards to graveyard
-        else if (battleManager.currentNumber == battleManager.targetNumber && Time.timeSinceLevelLoad - timeEnter >= timeExit)
-        {
-            Debug.Log("Target number is reached. Moving cards to Graveyard and starting a new round.");
-            battleManager.SwitchTurn();
-            // empty table and pot before new round
-            table.ClearTable(CardCollections.Graveyard);
-            pot.EmptyPot();
-            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit;
-        }
-        // if neither of the above then continue the same round and switch turns
-        else if (Time.timeSinceLevelLoad - timeEnter >= timeExit)
-        {
-            Debug.Log(battleManager.playerTurn + " player's turn has ended. Switching sides.");
-            battleManager.SwitchTurn();
-            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
-            stage = Stages.Exit;
-        }
     }
 
     public override void Exit()
@@ -90,5 +50,56 @@ public class TurnEnd : Phase
             playerHand.ClearTurnInfo();
         else
             npcHand.ClearTurnInfo();
+    }
+
+    void EvaluateTurn()
+    {
+        // if a side lost the battle then end it
+        //if ((currentHpNPC <= 0 || currentHpPlayer <= 0) && Time.timeSinceLevelLoad - timeEnter >= timeExit)
+        if (currentHpNPC <= 0 || currentHpPlayer <= 0)
+        {
+            Debug.Log("A side has reached 0 HP. Game is over");
+            nextPhase = new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand);
+            //stage = Stages.Exit;
+        }
+        // if challenge is won, even if target isn't reached yet then start a new round
+        else if (isChallengeWon /*&& Time.timeSinceLevelLoad - timeEnter >= timeExit*/)
+        {
+            Debug.Log("Challenge is won by opponent. Moving cards to graveyard and starting a new round.");
+            battleManager.SwitchTurn();
+            // empty table and pot before new round
+            table.ClearTable(CardCollections.Graveyard);
+            pot.EmptyPot();
+            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
+            //stage = Stages.Exit;
+        }
+        // if the target is crossed then start a new round and move cards to pot
+        else if (battleManager.currentNumber > battleManager.targetNumber /*&& Time.timeSinceLevelLoad - timeEnter >= timeExit*/)
+        {
+            Debug.Log("Target number is crossed. Moving cards to Pot and starting a new round.");
+            battleManager.SwitchTurn();
+            table.ClearTable(CardCollections.Pot);
+            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
+            //stage = Stages.Exit;
+        }
+        // if the target is reached then start a new round and move cards to graveyard
+        else if (battleManager.currentNumber == battleManager.targetNumber /*&& Time.timeSinceLevelLoad - timeEnter >= timeExit*/)
+        {
+            Debug.Log("Target number is reached. Moving cards to Graveyard and starting a new round.");
+            battleManager.SwitchTurn();
+            // empty table and pot before new round
+            table.ClearTable(CardCollections.Graveyard);
+            pot.EmptyPot();
+            nextPhase = new NewRound(battleManager, playerStats, npcData, playerHand, npcHand);
+            //stage = Stages.Exit;
+        }
+        // if neither of the above then continue the same round and switch turns
+        else /*if (Time.timeSinceLevelLoad - timeEnter >= timeExit)*/
+        {
+            Debug.Log(battleManager.playerTurn + " player's turn has ended. Switching sides.");
+            battleManager.SwitchTurn();
+            nextPhase = new CardDeal(battleManager, playerStats, npcData, playerHand, npcHand);
+            //stage = Stages.Exit;
+        }
     }
 }

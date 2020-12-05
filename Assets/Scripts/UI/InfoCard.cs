@@ -35,4 +35,4 @@ public class InfoCard : MonoBehaviour
 }
 
 public enum InfoType { PlayerChallengeRight, PlayerChallengeWrong, NoChallenge, OpponentChallenge, PlayerGuessRight, 
-                       PlayerGuessWrong, EnemyGuessRight, TurnEnd, NewRound, CardDeal, CardPick }
+                       PlayerGuessWrong, EnemyGuessRight, TurnEnd, NewBattle, NewRound, CardDeal, CardPick }

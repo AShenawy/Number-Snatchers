@@ -16,6 +16,7 @@ public class CheckGuess : Phase
     float timeEnter;    // time to countdown from
     float timeExit = 2f;    // time to exit the phase
     Pot pot;
+    InfoCard infoCard;
 
 
     public CheckGuess(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd, bool _isChallenged)
@@ -38,11 +39,11 @@ public class CheckGuess : Phase
 
     public override void Update()
     {
-        if (isCheckComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
-        {
-            nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
-            stage = Stages.Exit;
-        }
+        //if (isCheckComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+        //{
+        //    nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
+        //    stage = Stages.Exit;
+        //}
     }
 
     public override void Exit()
@@ -129,8 +130,45 @@ public class CheckGuess : Phase
 
     void DisplayInfoCard(ChallengeCases challenge)
     {
-        //TODO Display appropriate info card based on guesses and challenges.
-        Debug.Log("<color=red>" + challenge.ToString() + "</color>");
+        InfoCard card = new InfoCard();
+
+        switch (challenge)
+        {
+            case ChallengeCases.RightGuess:
+                infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerGuessRight);
+                card = Object.Instantiate(infoCard, battleManager.transform);
+                if (battleManager.playerTurn == CurrentPlayer.Human)
+                    card.descriptionText.text = ($"good guess! correct sum is" +
+                                                $"\n<color=#0f0f><size=66>{trueSum}</size></color>").ToUpper();
+                else
+                    card.descriptionText.text = ($"{npcData.enemyName} guessed right." +
+                                                "\ncorrect sum is" +
+                                                $"\n<color=#0f0f><size=66>{trueSum}</size></color>").ToUpper();
+                break;
+
+            case ChallengeCases.NoChallenge:
+                infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerGuessWrong);
+                card = Object.Instantiate(infoCard, battleManager.transform);
+                card.descriptionText.text = trueSum.ToString();
+                break;
+
+            case ChallengeCases.BothWrong:
+                infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerGuessWrong);
+                card = Object.Instantiate(infoCard, battleManager.transform);
+                card.descriptionText.text = trueSum.ToString();
+                break;
+
+            case ChallengeCases.ChallengeCorrect:
+                if (battleManager.playerTurn == CurrentPlayer.Human)
+                    infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerChallengeWrong);
+                else
+                    infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerChallengeRight);
+                card = Object.Instantiate(infoCard, battleManager.transform);
+                card.descriptionText.text = trueSum.ToString();
+                break;
+        }
+
+        card.onCardDestroyed += MoveToNextPhase;
     }
 
     void CheckGuessedSum()
@@ -240,5 +278,11 @@ public class CheckGuess : Phase
                 battleManager.npcHealthCards.UpdateCards((float)currentHpNPC / startingHpNPC);
                 break;
         }
+    }
+
+    void MoveToNextPhase()
+    {
+        nextPhase = new TurnEnd(battleManager, playerStats, npcData, playerHand, npcHand, isChallengeWon);
+        stage = Stages.Exit;
     }
 }

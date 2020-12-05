@@ -9,11 +9,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_Text
-      value: CHALLENGE PASSED
+      value: CORRECT!
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670270298263477, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 773670270360090036, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_Name
-      value: Challenge Passed Card Variant
+      value: Correct Guess Card Variant
       objectReference: {fileID: 0}
     - target: {fileID: 773670270360090037, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_LocalPosition.x
@@ -65,7 +77,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 773670270360090037, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 244
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 773670270360090037, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_SizeDelta.x
@@ -99,13 +111,49 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1648597919326308259, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -53.6
+      objectReference: {fileID: 0}
     - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_Text
+      value: '[A SIDE GUESSED CORRECTLY]
+
+        CORRECT SUM IS
+
+        ##'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_Font
       value: 
+      objectReference: {fileID: 12800000, guid: f5a1498d6cd71b04696984823800bd49, type: 3}
+    - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_HorizontalOverflow
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6508444796867820976, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: cardType
-      value: 2
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6508444796867820976, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: cardDuration
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}

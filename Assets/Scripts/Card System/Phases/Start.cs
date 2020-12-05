@@ -10,6 +10,7 @@ public class Start : Phase
     Text roundNumberDisplay;
     Text targetNumberDisplay;
     Text currentNumberDisplay;
+    InfoCard infoCard;
 
     float counter;
     float exitTimer = 2f;   // how long to wait before exiting this phase
@@ -26,6 +27,8 @@ public class Start : Phase
         roundNumberDisplay = battleManager.roundNumberDisplay;
         targetNumberDisplay = battleManager.targetNumberDisplay;
         currentNumberDisplay = battleManager.currentNumberDisplay;
+
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.NewBattle);
     }
 
     public override void Enter()
@@ -60,6 +63,9 @@ public class Start : Phase
         roundNumberDisplay.text = "";
         targetNumberDisplay.text = "";
         currentNumberDisplay.text = "";
+
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.onCardDestroyed += MoveToNextPhase;
         counter = Time.timeSinceLevelLoad;
 
         base.Enter();
@@ -68,11 +74,11 @@ public class Start : Phase
     public override void Update()
     {
         // nothing happens during this phase besides initialisation. Move on to next phase after time passes
-        if (Time.timeSinceLevelLoad - counter >= exitTimer)
-        {
-            nextPhase = new NewRound(battleManager, playerStats, npcData, base.playerHand, npcHand);
-            stage = Stages.Exit;
-        }
+        //if (Time.timeSinceLevelLoad - counter >= exitTimer)
+        //{
+        //    nextPhase = new NewRound(battleManager, playerStats, npcData, base.playerHand, npcHand);
+        //    stage = Stages.Exit;
+        //}
     }
 
     public override void Exit()
@@ -85,5 +91,11 @@ public class Start : Phase
     {
         battleManager.StartCoroutine(battleManager.DealCards(playerHand));
         battleManager.StartCoroutine(battleManager.DealCards(npcHand));
+    }
+
+    void MoveToNextPhase()
+    {
+        nextPhase = new NewRound(battleManager, playerStats, npcData, base.playerHand, npcHand);
+        stage = Stages.Exit;
     }
 }

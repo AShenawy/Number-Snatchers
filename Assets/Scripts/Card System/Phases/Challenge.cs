@@ -8,6 +8,7 @@ public class Challenge : Phase
     bool isChallengeComplete;
     float timeEnter;    // time to countdown from
     float timeExit = 2f;    // time to exit the phase
+    InfoCard infoCard;
 
 
     public Challenge(BattleManager _bm, Stats _plStats, EnemyBattleData _npcData, PlayerHand _plrHnd, NPCHand _npcHnd)
@@ -40,11 +41,11 @@ public class Challenge : Phase
 
     public override void Update()
     {
-        if (isChallengeComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
-        {
-            nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand, isCurrentPlayerChallenged);
-            stage = Stages.Exit;
-        }
+        //if (isChallengeComplete && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+        //{
+        //    nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand, isCurrentPlayerChallenged);
+        //    stage = Stages.Exit;
+        //}
     }
 
     public override void Exit()
@@ -68,18 +69,21 @@ public class Challenge : Phase
         switch (npcHand.lastPlayedCard.cardType)
         {
             case CardType.Add:
-                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played an <color=red>Add {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=red>{npcHand.guess}</color>." +
-                    $"\nChallenge {npcData.enemyName}'s guess?").ToUpper();
+                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played: <color=red>Add {npcHand.lastPlayedCard.value}</color>" +
+                    $"\nGuessed sum: <color=red>{npcHand.guess}</color>" +
+                    $"\nChallenge guess?").ToUpper();
                 break;
 
             case CardType.Subtract:
-                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played a <color=blue>Subtract {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=blue>{npcHand.guess}</color>." +
-                    $"\nChallenge {npcData.enemyName}'s guess?").ToUpper();
+                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played: <color=blue>Subtract {npcHand.lastPlayedCard.value}</color>" +
+                    $"\nGuessed sum: <color=blue>{npcHand.guess}</color>" +
+                    $"\nChallenge guess?").ToUpper();
                 break;
 
             case CardType.Wild:
-                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played a <color=green>Wild {npcHand.lastPlayedCard.value}</color> card and guessed the sum equals to <color=green>{npcHand.guess}</color>." +
-                    $"\nChallenge {npcData.enemyName}'s guess?").ToUpper();
+                humanChallengerHandler.challengeDetails.text = ($"{npcData.enemyName} played: <color=green>Wild {npcHand.lastPlayedCard.value}</color>" +
+                    $"\nGuessed sum: <color=green>{npcHand.guess}</color>" +
+                    $"\nChallenge guess?").ToUpper();
                 break;
         }
     }
@@ -89,27 +93,49 @@ public class Challenge : Phase
     {
         playerHand.guess = challenge;
         isCurrentPlayerChallenged = true;
-        isChallengeComplete = true;
+        //isChallengeComplete = true;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.OpponentChallenge);
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.descriptionText.text = $"you challenged {npcData.enemyName}'s guess".ToUpper();
+        card.onCardDestroyed += MoveToNextPhase;
     }
 
     // if human player passes on challenging NPC player
     void PassChallengingNPC()
     {
         isCurrentPlayerChallenged = false;
-        isChallengeComplete = true;
+        //isChallengeComplete = true;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.NoChallenge);
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.descriptionText.text = $"you will not challenge {npcData.enemyName}".ToUpper();
+        card.onCardDestroyed += MoveToNextPhase;
     }
 
     // if NPC player decides to challenge human player
     void ChallengeHuman()
     {
         isCurrentPlayerChallenged = true;
-        isChallengeComplete = true;
+        //isChallengeComplete = true;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.OpponentChallenge);
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.descriptionText.text = $"{npcData.enemyName} challenges your guess".ToUpper();
+        card.onCardDestroyed += MoveToNextPhase;
     }
 
     // if NPC player passes on challenging human player
     void PassChallengingHuman()
     {
         isCurrentPlayerChallenged = false;
-        isChallengeComplete = true;
+        //isChallengeComplete = true;
+        infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.NoChallenge);
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.descriptionText.text = $"{npcData.enemyName} will not challenge".ToUpper();
+        card.onCardDestroyed += MoveToNextPhase;
+    }
+
+    void MoveToNextPhase()
+    {
+        nextPhase = new CheckGuess(battleManager, playerStats, npcData, playerHand, npcHand, isCurrentPlayerChallenged);
+        stage = Stages.Exit;
     }
 }

@@ -26,20 +26,24 @@ public class CardPlay : Phase
     public override void Enter()
     {
         Debug.Log("Entering Card Play phase. It's " + battleManager.playerTurn + " player's turn to play.");
+        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
+        card.onCardDestroyed += AllowToProceed;
 
         // if it's human player's trun allow interaction with cards. else let the npc play
         if (battleManager.playerTurn == CurrentPlayer.Human)
+        {
             playerHand.BlockCardInteractions(false);
+            card.descriptionText.text = "Player picks a card".ToUpper();
+        }
         else
         {
             // inform npc the latest current number and it's their turn to play
+            card.descriptionText.text = (npcData.enemyName + " picks a card").ToUpper();
             npcHand.UpdateCurrentNumber(battleManager.currentNumber);
             npcHand.PlayTurn();
         }
 
         //timeEnter = Time.timeSinceLevelLoad;
-        InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
-        card.onCardDestroyed += AllowToProceed;
         base.Enter();
     }
 
