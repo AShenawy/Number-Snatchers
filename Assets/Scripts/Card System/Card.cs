@@ -12,6 +12,7 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     [Range(0, 100)] public float peekUpDistance;
     public Sprite face;
     public Sprite sleeve;
+    public AudioClip hoverSFX, playCardSFX;
 
     [SerializeField] Image cardGraphic;
     RectTransform artTransform;
@@ -30,6 +31,9 @@ public class Card : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public void OnPointerEnter(PointerEventData eventData)
     {
         artTransform.anchoredPosition += new Vector2(0, peekUpDistance);
+
+        if (hoverSFX)
+            SoundManager.instance.PlaySFX(hoverSFX);
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -46,7 +46,7 @@ public class Start : Phase
         // set up opponent stats & display
         npcHand.data = npcData;
         npcCard.sprite = npcData.enemyCard;
-        npcNameDisplay.text = npcData.enemyName;
+        npcNameDisplay.text = npcData.enemyName.ToUpper();
         currentHpNPC = startingHpNPC;
         battleManager.npcCurrentHP = currentHpNPC;
         battleManager.nPCHPDisplay.fillAmount = currentHpNPC / startingHpNPC;

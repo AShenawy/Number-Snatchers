@@ -111,6 +111,18 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 773670271050902578, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1854.8813
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670271050902579, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 773670271050902581, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3763493526850620887, guid: 307d563962a23fa45b3330cdb3c70825, type: 3}
       propertyPath: m_Text
       value: '[CARD PICK DETAILS]'

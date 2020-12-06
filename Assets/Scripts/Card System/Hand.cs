@@ -14,6 +14,9 @@ public abstract class Hand : MonoBehaviour
 
     public virtual void PlayCard(Card card)
     {
+        if (card.playCardSFX)
+            SoundManager.instance.PlaySFX(card.playCardSFX);
+
         cardsInHand.Remove(card);
         card.ShowFace(true);
         table.PlaceOnTable(card);

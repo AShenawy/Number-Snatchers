@@ -144,3 +144,6 @@ MonoBehaviour:
   peekUpDistance: 50
   face: {fileID: 21300000, guid: eb9dbd37e4213c7479d62f8561e91f46, type: 3}
   sleeve: {fileID: 21300000, guid: 09b7f3a44e72ee04295fbac6f3e218de, type: 3}
+  hoverSFX: {fileID: 8300000, guid: 5ce02742200cb9346bf83c375937687f, type: 3}
+  playCardSFX: {fileID: 8300000, guid: ef4fb06ced605f24eb447f19937eb52a, type: 3}
+  cardGraphic: {fileID: 0}
