@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardType: 0
+  titleText: {fileID: 773670270298263477}
   descriptionText: {fileID: 3763493526850620887}
   cardDuration: 3
 --- !u!95 &3417574762150193669

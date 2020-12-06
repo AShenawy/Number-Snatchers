@@ -7,6 +7,7 @@ public class InfoCard : MonoBehaviour
 {
     public event Action onCardDestroyed; 
     public InfoType cardType;
+    public Text titleText;
     public Text descriptionText;
     [Range(0f, 10f)]    // how long will the card be up for
     public float cardDuration = 3f;
