@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 1801128564757025014}
   - component: {fileID: 6358442439323260066}
   - component: {fileID: -2148706087491633826}
+  - component: {fileID: -4559678837614805899}
   m_Layer: 5
   m_Name: Game Draw
   m_TagString: Untagged
@@ -206,6 +207,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFX: {fileID: 8300000, guid: 114433cfe0b858f4f82fac980d73dbf9, type: 3}
+--- !u!114 &-4559678837614805899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948064231470509947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec78f0b2480e9a4fa602b31cfef641d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5948064232163686138
 GameObject:
   m_ObjectHideFlags: 0
