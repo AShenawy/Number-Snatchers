@@ -70,12 +70,4 @@ public sealed class SoundManager : MonoBehaviour
     {
         SFXPlayer.PlayOneShot(sfxClip, volScale);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            PlayEndChimes(EndType.Win);
-        }
-    }
 }

@@ -1,91 +1,87 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthCards : MonoBehaviour
 {
-    public Image[] cards;
-    public Sprite healthFull, healthHalf, healthEmpty;
+    public HealthCard[] cards;
 
 
     public void RefillCards()
     {
-        foreach (Image card in cards)
-            card.sprite = healthFull;
+        foreach (HealthCard card in cards)
+            card.SetFull();
     }
 
     void EmptyCards()
     {
-        foreach (Image card in cards)
-            card.sprite = healthEmpty;
+        foreach (HealthCard card in cards)
+            card.SetEmpty();
     }
 
     public void UpdateCards(float percentageHP)
     {
         void MakeFull(int cardNum)
         {
-            cards[cardNum].sprite = healthFull;
+            cards[cardNum].SetFull();
         }
 
         void MakeHalf(int cardNum)
         {
-            cards[cardNum].sprite = healthHalf;
+            cards[cardNum].SetHalf();
         }
 
         void MakeEmpty(int cardNum)
         {
-            cards[cardNum].sprite = healthEmpty;
+            cards[cardNum].SetEmpty();
         }
 
 
         if (percentageHP <= 0f)
         {
-            //EmptyCards();
-            MakeEmpty(0);
+            EmptyCards();
         }
         else if (percentageHP <= 0.1f)
         {
-            //MakeEmpty(4);
-            //MakeEmpty(3);
-            //MakeEmpty(2);
-            //MakeEmpty(1);
+            MakeEmpty(4);
+            MakeEmpty(3);
+            MakeEmpty(2);
+            MakeEmpty(1);
             MakeHalf(0);
         }
         else if (percentageHP <= 0.2f)
         {
-            //MakeEmpty(4);
-            //MakeEmpty(3);
-            //MakeEmpty(2);
+            MakeEmpty(4);
+            MakeEmpty(3);
+            MakeEmpty(2);
             MakeEmpty(1);
         }
         else if (percentageHP <= 0.3f)
         {
-            //MakeEmpty(4);
-            //MakeEmpty(3);
-            //MakeEmpty(2);
+            MakeEmpty(4);
+            MakeEmpty(3);
+            MakeEmpty(2);
             MakeHalf(1);
         }
         else if (percentageHP <= 0.4f)
         {
-            //MakeEmpty(4);
-            //MakeEmpty(3);
+            MakeEmpty(4);
+            MakeEmpty(3);
             MakeEmpty(2);
         }
         else if (percentageHP <= 0.5f)
         {
-            //MakeEmpty(4);
-            //MakeEmpty(3);
+            MakeEmpty(4);
+            MakeEmpty(3);
             MakeHalf(2);
         }
         else if (percentageHP <= 0.6f)
         {
-            //MakeEmpty(4);
+            MakeEmpty(4);
             MakeEmpty(3);
         }
         else if (percentageHP <= 0.7f)
         {
-            //MakeEmpty(4);
+            MakeEmpty(4);
             MakeHalf(3);
         }
         else if (percentageHP <= 0.8f)
