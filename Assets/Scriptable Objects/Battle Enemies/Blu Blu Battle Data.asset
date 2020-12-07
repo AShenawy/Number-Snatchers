@@ -27,11 +27,11 @@ MonoBehaviour:
   - I know i won
   - i never lose
   battleWinQuotes:
-  - I'll get you next time!
-  - it can't be!!
-  battleLoseQuotes:
   - i'm a math genius!
   - Mwaahahaha
+  battleLoseQuotes:
+  - I'll get you next time!
+  - it can't be!!
   cardPickQuotes:
   - my turn!
   - I'll show you what I got

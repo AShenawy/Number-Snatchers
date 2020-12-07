@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8060051020572713999}
   - component: {fileID: 5876049141098753889}
   - component: {fileID: 86802919172725672}
+  - component: {fileID: 2945504851594471302}
   m_Layer: 5
   m_Name: Guess Input
   m_TagString: Untagged
@@ -89,6 +90,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2945504851594471302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849427264828615237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a85f7fdbea607484f89ee865e5ec0f94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSFX: {fileID: 8300000, guid: 37f096405f9343449ab6e2b58f35bf9a, type: 3}
 --- !u!1 &1724932643912805253
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +830,7 @@ PrefabInstance:
     - target: {fileID: 8291367453852021004, guid: 30d6a991e72d60944b548bbba485d3d6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 8999436866456988440}
+      objectReference: {fileID: 2945504851594471302}
     - target: {fileID: 8291367453852021004, guid: 30d6a991e72d60944b548bbba485d3d6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: PlayClickSFX
@@ -829,7 +843,8 @@ PrefabInstance:
       propertyPath: m_Text
       value: SUBMIT
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -223935169193440058, guid: 30d6a991e72d60944b548bbba485d3d6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 30d6a991e72d60944b548bbba485d3d6, type: 3}
 --- !u!224 &8291367454793176789 stripped
 RectTransform:
@@ -845,16 +860,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8999436866456988440 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -223935169193440058, guid: 30d6a991e72d60944b548bbba485d3d6, type: 3}
-  m_PrefabInstance: {fileID: 1211836382}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a85f7fdbea607484f89ee865e5ec0f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
