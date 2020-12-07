@@ -23,30 +23,46 @@ MonoBehaviour:
   - let's do this!
   - I'll destroy you!
   - You're mine!! *&@$(^
+  - Prepare to lose!
+  - you'll never beat me!
   endQuotes:
   - I know i won
   - i never lose
+  - can't wait to make you cry
   battleWinQuotes:
   - i'm a math genius!
   - Mwaahahaha
+  - you can never beat my brains!
   battleLoseQuotes:
   - I'll get you next time!
   - it can't be!!
+  - I don't believe this!
   cardPickQuotes:
   - my turn!
   - I'll show you what I got
   - take this!
+  - this round's mine!
   challengeQuotes:
   - ha!
   - I challenge you!
+  - you'll be sorry!
   passQuotes:
   - I'll pass this time
   - Meh
+  - that was an easy one, anyway
   beingChallengedQuotes:
   - Raaargh!!
+  - you think I make mistakes like you?!
+  - you dare challenge me?!
   notChallengedQuotes:
   - I thought so
+  - i'm never wrong
+  - you can't challenge me
   winChallengeQuotes:
-  - I'm always right
+  - I'm always right!
+  - you're no match for my intelligence!
+  - I knew it!
   loseChallengeQuotes:
   - whatever...
+  - you got lucky
+  - i was only distracted
