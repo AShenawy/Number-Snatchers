@@ -8,7 +8,7 @@ public class CardPlay : Phase
     Card playedHumanCard;
     int humanGuess;
     float timeEnter;    // time to countdown from
-    float timeExit = 2f; // time to exit the phase
+    float timeExit = 1.5f; // time to exit the phase
     InfoCard infoCard;
     bool canProceed;
 
@@ -27,13 +27,13 @@ public class CardPlay : Phase
     {
         Debug.Log("Entering Card Play phase. It's " + battleManager.playerTurn + " player's turn to play.");
         InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
-        card.onCardDestroyed += AllowToProceed;
 
         // if it's human player's trun allow interaction with cards. else let the npc play
         if (battleManager.playerTurn == CurrentPlayer.Human)
         {
             playerHand.BlockCardInteractions(false);
             card.descriptionText.text = "Player picks a card".ToUpper();
+            card.onCardDestroyed += AllowToProceed;
         }
         else
         {
@@ -41,7 +41,7 @@ public class CardPlay : Phase
             card.descriptionText.text = (npcData.enemyName + " picks a card").ToUpper();
             npcHand.UpdateCurrentNumber(battleManager.currentNumber);
             battleManager.nPCDisplay.SetReaction(npcData.cardPickQuotes[Random.Range(0, npcData.cardPickQuotes.Length)], npcData.enemyAngry);
-            npcHand.PlayTurn();
+            card.onCardDestroyed += NPCPlay;
         }
 
         //timeEnter = Time.timeSinceLevelLoad;
@@ -50,8 +50,8 @@ public class CardPlay : Phase
 
     public override void Update()
     {
-        //if (isCardPlayed && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
-        if (isCardPlayed && canProceed)
+        if (isCardPlayed && (Time.timeSinceLevelLoad - timeEnter >= timeExit))
+        //if (isCardPlayed && canProceed)
         {
             nextPhase = new Challenge(battleManager, playerStats, npcData, playerHand, npcHand);
             stage = Stages.Exit;
@@ -71,6 +71,12 @@ public class CardPlay : Phase
 
         Debug.Log("Exiting Card Play phase after " + battleManager.playerTurn + " player played their card. Phase time is " + (Time.timeSinceLevelLoad - timeEnter) + " seconds.");
         base.Exit();
+    }
+
+    void NPCPlay()
+    {
+        npcHand.PlayTurn();
+        timeEnter = Time.timeSinceLevelLoad;
     }
 
     void OnHumanCardPlayed(Card playedCard)

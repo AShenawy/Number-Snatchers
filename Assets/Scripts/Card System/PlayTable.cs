@@ -11,9 +11,9 @@ public class PlayTable : MonoBehaviour
     public void PlaceOnTable(Card card)
     {
         cardsOnTable.Add(card);
-        RectTransform rt = card.GetComponent<RectTransform>();
-        rt.SetParent(gameObject.transform, false);
-        UIFuncs.ResetRect(rt);
+        //RectTransform rt = card.GetComponent<RectTransform>();
+        //rt.SetParent(gameObject.transform, false);
+        //UIFuncs.ResetRect(rt);
     }
 
     public void ClearTable(CardCollections destination)

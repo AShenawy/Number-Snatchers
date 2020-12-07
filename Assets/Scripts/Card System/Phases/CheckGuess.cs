@@ -130,13 +130,13 @@ public class CheckGuess : Phase
 
     void DisplayInfoCard(ChallengeCases challenge)
     {
-        InfoCard card = new InfoCard();
+        //InfoCard card = new InfoCard();
 
         switch (challenge)
         {
             case ChallengeCases.RightGuess:
                 infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerGuessRight);
-                card = Object.Instantiate(infoCard, battleManager.transform);
+                InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
                 if (battleManager.playerTurn == CurrentPlayer.Human)
                     card.descriptionText.text = ($"good guess! correct sum is" +
                                                 $"\n<color=#0f0f><size=66>{trueSum}</size></color>").ToUpper();
@@ -144,18 +144,21 @@ public class CheckGuess : Phase
                     card.descriptionText.text = ($"{npcData.enemyName} guessed right." +
                                                 "\ncorrect sum is" +
                                                 $"\n<color=#0f0f><size=66>{trueSum}</size></color>").ToUpper();
+                card.onCardDestroyed += MoveToNextPhase;
                 break;
 
             case ChallengeCases.NoChallenge:
                 infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerGuessWrong);
                 card = Object.Instantiate(infoCard, battleManager.transform);
                 card.descriptionText.text = trueSum.ToString();
+                card.onCardDestroyed += MoveToNextPhase;
                 break;
 
             case ChallengeCases.BothWrong:
                 infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerGuessWrong);
                 card = Object.Instantiate(infoCard, battleManager.transform);
                 card.descriptionText.text = trueSum.ToString();
+                card.onCardDestroyed += MoveToNextPhase;
                 break;
 
             case ChallengeCases.ChallengeCorrect:
@@ -165,10 +168,9 @@ public class CheckGuess : Phase
                     infoCard = System.Array.Find(battleManager.infoCardsPrefabs, c => c.cardType == InfoType.PlayerChallengeRight);
                 card = Object.Instantiate(infoCard, battleManager.transform);
                 card.descriptionText.text = trueSum.ToString();
+                card.onCardDestroyed += MoveToNextPhase;
                 break;
         }
-
-        card.onCardDestroyed += MoveToNextPhase;
     }
 
     void CheckGuessedSum()

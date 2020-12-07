@@ -65,7 +65,26 @@ public class NPCHand : Hand
         base.PlayCard(card);
         guess = GuessValue(card);
         lastPlayedCard = card;
-        onCardPlayed?.Invoke(card);
+
+        RectTransform rt = card.GetComponent<RectTransform>();
+        RestPivot();
+        card.transform.SetParent(table.transform);
+        LeanTween.move(rt, table.GetComponent<RectTransform>().anchoredPosition, 0.5f).setOnComplete(OnTweenComplete);
+
+        void RestPivot()
+        {
+            rt.anchorMin = new Vector2(0.5f, 0.5f);
+            rt.anchorMax = new Vector2(0.5f, 0.5f);
+        }
+
+        void OnTweenComplete()
+        {
+            if (card.playCardSFX)
+                SoundManager.instance.PlaySFX(card.playCardSFX);
+
+            table.PlaceOnTable(card);
+            onCardPlayed?.Invoke(card);
+        }
     }
 
     int GuessValue(Card card)

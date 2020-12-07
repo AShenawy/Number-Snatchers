@@ -11,7 +11,27 @@ public class PlayerHand : Hand
     {
         base.PlayCard(card);
         lastPlayedCard = card;
-        humanCardPlayed?.Invoke(card);
+
+        // set the table as the new parent of card then animate card
+        RectTransform rt = card.GetComponent<RectTransform>();
+        RestPivot();
+        card.transform.SetParent(table.transform);
+        LeanTween.move(rt, table.GetComponent<RectTransform>().anchoredPosition, 0.5f).setOnComplete(OnTweenComplete);
+
+        void RestPivot()
+        {
+            rt.anchorMin = new Vector2(0.5f, 0.5f);
+            rt.anchorMax = new Vector2(0.5f, 0.5f);
+        }
+
+        void OnTweenComplete()
+        {
+            if (card.playCardSFX)
+                SoundManager.instance.PlaySFX(card.playCardSFX);
+
+            table.PlaceOnTable(card);
+            humanCardPlayed?.Invoke(card);
+        }
     }
 
     public void BlockCardInteractions(bool value)
