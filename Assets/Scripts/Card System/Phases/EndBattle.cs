@@ -66,12 +66,14 @@ public class EndBattle : Phase
             Debug.Log("<color=magenta>Human player won the battle!</color>");
             endHandler = Object.Instantiate(battleManager.gameWonCardPrefab, battleManager.transform);
             endHandler.onButtonClicked += OnReplay;
+            battleManager.nPCDisplay.SetReaction(npcData.battleLoseQuotes[Random.Range(0, npcData.battleLoseQuotes.Length)], npcData.enemyAngry);
         }
         else if (win == 2)
         {
             Debug.Log("<color=magenta>Computer player won the battle!</color>");
             endHandler = Object.Instantiate(battleManager.gameLostCardPrefab, battleManager.transform);
             endHandler.onButtonClicked += OnReplay;
+            battleManager.nPCDisplay.SetReaction(npcData.battleWinQuotes[Random.Range(0, npcData.battleWinQuotes.Length)], npcData.enemyAngry);
         }
         else
         {

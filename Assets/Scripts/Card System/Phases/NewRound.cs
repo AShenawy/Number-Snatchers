@@ -25,6 +25,8 @@ public class NewRound : Phase
         //counter = Time.timeSinceLevelLoad;
         InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
         card.onCardDestroyed += MoveToNextPhase;
+        battleManager.nPCDisplay.SetReaction(npcData.startQuotes[Random.Range(0, npcData.startQuotes.Length)], npcData.enemyAngry);
+
         base.Enter();
     }
 

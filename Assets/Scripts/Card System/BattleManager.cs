@@ -19,8 +19,9 @@ public class BattleManager : MonoBehaviour
     public Text roundNumberDisplay;
     public Text targetNumberDisplay;
     public Text currentNumberDisplay;
-    public Image nPCCardDisplay;
-    public Text nPCNameDisplay;
+    public NPCDisplay nPCDisplay;
+    //public Image nPCCardDisplay;
+    //public Text nPCNameDisplay;
     public Image nPCHPDisplay;
     public Image playerHPDisplay;
     public HealthCards npcHealthCards;

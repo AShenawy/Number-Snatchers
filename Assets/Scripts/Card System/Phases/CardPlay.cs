@@ -40,6 +40,7 @@ public class CardPlay : Phase
             // inform npc the latest current number and it's their turn to play
             card.descriptionText.text = (npcData.enemyName + " picks a card").ToUpper();
             npcHand.UpdateCurrentNumber(battleManager.currentNumber);
+            battleManager.nPCDisplay.SetReaction(npcData.cardPickQuotes[Random.Range(0, npcData.cardPickQuotes.Length)], npcData.enemyAngry);
             npcHand.PlayTurn();
         }
 

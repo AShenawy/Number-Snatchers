@@ -98,6 +98,7 @@ public class Challenge : Phase
         InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
         card.descriptionText.text = $"you challenged {npcData.enemyName}'s guess".ToUpper();
         card.onCardDestroyed += MoveToNextPhase;
+        battleManager.nPCDisplay.SetReaction(npcData.beingChallengedQuotes[Random.Range(0, npcData.beingChallengedQuotes.Length)], npcData.enemyAngry);
     }
 
     // if human player passes on challenging NPC player
@@ -109,6 +110,7 @@ public class Challenge : Phase
         InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
         card.descriptionText.text = $"you will not challenge {npcData.enemyName}".ToUpper();
         card.onCardDestroyed += MoveToNextPhase;
+        battleManager.nPCDisplay.SetReaction(npcData.notChallengedQuotes[Random.Range(0, npcData.notChallengedQuotes.Length)], npcData.enemyIdle);
     }
 
     // if NPC player decides to challenge human player
@@ -120,6 +122,7 @@ public class Challenge : Phase
         InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
         card.descriptionText.text = $"{npcData.enemyName} challenges your guess".ToUpper();
         card.onCardDestroyed += MoveToNextPhase;
+        battleManager.nPCDisplay.SetReaction(npcData.challengeQuotes[Random.Range(0, npcData.challengeQuotes.Length)], npcData.enemyAngry);
     }
 
     // if NPC player passes on challenging human player
@@ -131,6 +134,7 @@ public class Challenge : Phase
         InfoCard card = Object.Instantiate(infoCard, battleManager.transform);
         card.descriptionText.text = $"{npcData.enemyName} will not challenge".ToUpper();
         card.onCardDestroyed += MoveToNextPhase;
+        battleManager.nPCDisplay.SetReaction(npcData.passQuotes[Random.Range(0, npcData.passQuotes.Length)], npcData.enemyIdle);
     }
 
     void MoveToNextPhase()

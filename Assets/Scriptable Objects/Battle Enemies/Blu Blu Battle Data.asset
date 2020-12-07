@@ -14,6 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Blu Blu
   health: 100
-  enemyCard: {fileID: 21300000, guid: 8c86ecfb700dff94286e174b0fbb684e, type: 3}
+  enemyDefault: {fileID: 21300000, guid: 8c86ecfb700dff94286e174b0fbb684e, type: 3}
+  enemyIdle: {fileID: 21300000, guid: 8c86ecfb700dff94286e174b0fbb684e, type: 3}
+  enemyAngry: {fileID: 21300000, guid: f1d94dce3a2aacc49a0bd070b0cd096c, type: 3}
   battleStyle: 0
   difficulty: 0
+  startQuotes:
+  - let's do this!
+  - I'll destroy you!
+  - You're mine!! *&@$(^
+  endQuotes:
+  - I know i won
+  - i never lose
+  battleWinQuotes:
+  - I'll get you next time!
+  - it can't be!!
+  battleLoseQuotes:
+  - i'm a math genius!
+  - Mwaahahaha
+  cardPickQuotes:
+  - my turn!
+  - I'll show you what I got
+  - take this!
+  challengeQuotes:
+  - ha!
+  - I challenge you!
+  passQuotes:
+  - I'll pass this time
+  - Meh
+  beingChallengedQuotes:
+  - Raaargh!!
+  notChallengedQuotes:
+  - I thought so
+  winChallengeQuotes:
+  - I'm always right
+  loseChallengeQuotes:
+  - whatever...

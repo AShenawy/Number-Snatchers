@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class Start : Phase
 {
     Dealer cardDealer;
-    Image npcCard;
-    Text npcNameDisplay;
+    //Image npcCard;
+    //Text npcNameDisplay;
+    NPCDisplay nPCDisplay;
     Text roundNumberDisplay;
     Text targetNumberDisplay;
     Text currentNumberDisplay;
@@ -21,8 +22,9 @@ public class Start : Phase
         name = Phases.BattleStart;
         
         cardDealer = battleManager.dealer;
-        npcCard = battleManager.nPCCardDisplay;
-        npcNameDisplay = battleManager.nPCNameDisplay;
+        //npcCard = battleManager.nPCCardDisplay;
+        //npcNameDisplay = battleManager.nPCNameDisplay;
+        nPCDisplay = battleManager.nPCDisplay;
 
         roundNumberDisplay = battleManager.roundNumberDisplay;
         targetNumberDisplay = battleManager.targetNumberDisplay;
@@ -35,7 +37,7 @@ public class Start : Phase
     {
         Debug.Log("Entering Start phase");
 
-        // set up player stats & display
+        //*** set up player stats & display ***
         currentHpPlayer = startingHpPlayer;
         battleManager.playerCurrentHP = currentHpPlayer;
         battleManager.playerHPDisplay.fillAmount = currentHpPlayer / startingHpPlayer;
@@ -43,22 +45,25 @@ public class Start : Phase
         // prevent player from playing cards until CardPick phase
         playerHand.BlockCardInteractions(true);
 
-        // set up opponent stats & display
+        //*** set up opponent stats & display ***
         npcHand.data = npcData;
-        npcCard.sprite = npcData.enemyCard;
-        npcNameDisplay.text = npcData.enemyName.ToUpper();
+        //npcCard.sprite = npcData.enemyDefault;
+        nPCDisplay.SetDefaultSprite(npcData.enemyDefault);
+        //npcNameDisplay.text = npcData.enemyName.ToUpper();
+        nPCDisplay.SetName(npcData.enemyName.ToUpper());
         currentHpNPC = startingHpNPC;
         battleManager.npcCurrentHP = currentHpNPC;
         battleManager.nPCHPDisplay.fillAmount = currentHpNPC / startingHpNPC;
         battleManager.npcHealthCards.RefillCards();
+        nPCDisplay.SetReaction(npcData.startQuotes[Random.Range(0, npcData.startQuotes.Length)], npcData.enemyAngry);
 
-        // set up deck
+        //*** set up deck ***
         cardDealer.FillDeck(npcData.difficulty);
 
         // deal both sides on game start
         DealBothPlayers();
 
-        // initialise counters & parameters
+        //*** initialise counters & parameters ***
         //battleManager.playerTurn = CurrentPlayer.Human;       //********** Uncomment when done with testing *************
         roundNumberDisplay.text = "";
         targetNumberDisplay.text = "";

@@ -61,6 +61,7 @@ public class TurnEnd : Phase
         {
             Debug.Log("A side has reached 0 HP. Game is over");
             nextPhase = new EndBattle(battleManager, playerStats, npcData, playerHand, npcHand);
+            battleManager.nPCDisplay.SetReaction(npcData.endQuotes[Random.Range(0, npcData.endQuotes.Length)], npcData.enemyAngry);
             DisplayInfoCard(1);
         }
         // if challenge is won, even if target isn't reached yet then start a new round
